@@ -1,0 +1,26 @@
+.about {
+  padding: 6rem 2rem;
+  min-height: calc(100vh - 6rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .about-content {
+    max-width: 800px;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      background: linear-gradient(to right, #fff, #9d55ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1.5rem;
+    }
+  }
+}

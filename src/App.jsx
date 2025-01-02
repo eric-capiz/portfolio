@@ -1,5 +1,6 @@
 import Hero from "./components/Hero";
 import Nav from "./components/Nav";
+import About from "./components/About";
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <div className="grid-overlay"></div>
       <Nav />
       <Hero />
+      <About />
     </div>
   );
 }
