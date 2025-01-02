@@ -38,15 +38,17 @@ function Nav() {
           href="https://github.com/ericcapiz"
           target="_blank"
           rel="noopener noreferrer"
+          className="icon-link"
         >
-          <FaGithub size={20} />
+          <FaGithub size={24} />
         </a>
         <a
           href="https://www.linkedin.com/in/eric-capiz"
           target="_blank"
           rel="noopener noreferrer"
+          className="icon-link"
         >
-          <FaLinkedin size={20} />
+          <FaLinkedin size={24} />
         </a>
       </div>
     </nav>
