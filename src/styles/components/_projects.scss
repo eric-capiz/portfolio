@@ -1,0 +1,30 @@
+.projects {
+  padding: 6rem 2rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .projects-content {
+    max-width: 1200px;
+    width: 100%;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      background: linear-gradient(to right, #fff, #9d55ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .placeholder {
+      text-align: center;
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.6);
+      padding: 4rem;
+      border: 2px dashed rgba(157, 85, 255, 0.3);
+      border-radius: 12px;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.footer {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(157, 85, 255, 0.3);
+  text-align: center;
+
+  .footer-content {
+    .social-links {
+      margin-bottom: 1rem;
+
+      a {
+        color: rgba(255, 255, 255, 0.8);
+        margin: 0 1rem;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: #9d55ff;
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+  }
+}

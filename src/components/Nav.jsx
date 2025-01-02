@@ -6,13 +6,31 @@ function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleResumeDownload = () => {
-    // Create a link element
     const link = document.createElement("a");
     link.href = "/Resume.pdf";
     link.download = "Eric_Capiz_Resume.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleNavClick = (e) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+
+    const targetId = e.target.getAttribute("href").slice(1);
+    const element = document.getElementById(targetId);
+
+    if (element) {
+      const offset = 40;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
@@ -25,10 +43,10 @@ function Nav() {
       </button>
 
       <div className={`nav-links ${isMenuOpen ? "open" : ""}`}>
-        <a href="#about" onClick={() => setIsMenuOpen(false)}>
+        <a href="#about" onClick={handleNavClick}>
           About
         </a>
-        <a href="#skills" onClick={() => setIsMenuOpen(false)}>
+        <a href="#skills" onClick={handleNavClick}>
           Skills
         </a>
         <button onClick={handleResumeDownload} className="resume-link">
