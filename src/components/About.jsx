@@ -24,7 +24,7 @@ function About() {
           y: 0,
           duration: 0.6,
           scrollTrigger: {
-            trigger: ".about",
+            trigger: aboutRef.current,
             start: "top center+=100",
             end: "bottom center-=100",
             toggleActions: "play reverse play reverse",
