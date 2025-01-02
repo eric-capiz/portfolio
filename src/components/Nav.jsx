@@ -49,6 +49,9 @@ function Nav() {
         <a href="#skills" onClick={handleNavClick}>
           Skills
         </a>
+        <a href="#contact" onClick={handleNavClick}>
+          Contact
+        </a>
         <button onClick={handleResumeDownload} className="resume-link">
           Resume
         </button>
