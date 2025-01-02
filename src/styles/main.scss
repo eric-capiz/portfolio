@@ -1,0 +1,31 @@
+@use "./components/hero";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(to right bottom, #0a0118, #1a0b2e);
+  color: #ffffff;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+.grid-overlay {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 127px 127px;
+  transform: rotate(45deg) scale(1.5);
+  pointer-events: none;
+  z-index: -1;
+}
