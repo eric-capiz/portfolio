@@ -1,0 +1,116 @@
+.nav {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10;
+
+  .menu-toggle {
+    display: block;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    padding: 0.5rem;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 5rem;
+    right: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+
+    &.open {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: #9d55ff;
+      }
+
+      svg {
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+.resume-link {
+  background: rgba(157, 85, 255, 0.1);
+  border: 1px solid rgba(157, 85, 255, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  border-radius: 100px;
+
+  &:hover {
+    background: rgba(157, 85, 255, 0.2);
+    border-color: #9d55ff;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0px);
+  }
+}
+
+// Desktop styles
+@media (min-width: 768px) {
+  .nav {
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    border-radius: 100px;
+
+    .menu-toggle {
+      display: none;
+    }
+
+    .nav-links {
+      position: static;
+      flex-direction: row;
+      padding: 0;
+      gap: 2.5rem;
+      transform: none;
+      opacity: 1;
+      visibility: visible;
+      border: none;
+      background: none;
+      backdrop-filter: none;
+    }
+  }
+}
