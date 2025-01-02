@@ -1,67 +1,66 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 
 function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const form = useRef();
+  const [status, setStatus] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Form submission logic will be added later
-    console.log("Form submitted:", formData);
-  };
+    setStatus("sending");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        form.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          setStatus("success");
+          form.current.reset();
+        },
+        (error) => {
+          console.log(error.text);
+          setStatus("error");
+        }
+      );
   };
 
   return (
     <section id="contact" className="contact">
       <div className="contact-content">
         <h2>Get In Touch</h2>
-        <form onSubmit={handleSubmit} className="contact-form">
+        <form ref={form} onSubmit={handleSubmit} className="contact-form">
           <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
+            <label htmlFor="from_name">Name</label>
+            <input type="text" id="from_name" name="from_name" required />
           </div>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
+            <label htmlFor="reply_to">Email</label>
+            <input type="email" id="reply_to" name="reply_to" required />
           </div>
           <div className="form-group">
             <label htmlFor="message">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              rows="5"
-            />
+            <textarea id="message" name="message" required rows="5" />
           </div>
-          <button type="submit" className="submit-btn">
-            Send Message
+          <button
+            type="submit"
+            className="submit-btn"
+            disabled={status === "sending"}
+          >
+            {status === "sending" ? "Sending..." : "Send Message"}
           </button>
+          {status === "success" && (
+            <p className="success-message">Message sent successfully!</p>
+          )}
+          {status === "error" && (
+            <p className="error-message">
+              Failed to send message. Please try again.
+            </p>
+          )}
         </form>
       </div>
     </section>
