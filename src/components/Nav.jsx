@@ -46,6 +46,9 @@ function Nav() {
         <a href="#about" onClick={handleNavClick}>
           About
         </a>
+        <a href="#projects" onClick={handleNavClick}>
+          Projects
+        </a>
         <a href="#skills" onClick={handleNavClick}>
           Skills
         </a>
