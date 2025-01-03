@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Text, Image } from "@react-three/drei";
 import PropTypes from "prop-types";
@@ -38,7 +38,7 @@ const projectsData = [
   },
 ];
 
-function ProjectCard({ project, position }) {
+function ProjectCard({ project, position, isMobile }) {
   const meshRef = useRef();
   const [hoverLive, setHoverLive] = useState(false);
   const [hoverCode, setHoverCode] = useState(false);
@@ -50,20 +50,32 @@ function ProjectCard({ project, position }) {
   });
 
   return (
-    <group ref={meshRef} position={position} cursor="pointer">
-      <Image url={project.mainImage} scale={[10, 6]} position={[0, 0, 0]} />
+    <group ref={meshRef} position={position}>
+      <Image
+        url={project.mainImage}
+        scale={isMobile ? [6, 4] : [10, 6]}
+        position={[0, 0, 0]}
+      />
 
-      <Text position={[0, -4, 0]} fontSize={0.7} color="white">
+      <Text
+        position={[0, isMobile ? -2.8 : -4, 0]}
+        fontSize={isMobile ? 0.6 : 0.7}
+        color="white"
+      >
         {project.name}
       </Text>
 
-      <Text position={[0, -5, 0]} fontSize={0.4} color="#9d55ff">
+      <Text
+        position={[0, isMobile ? -3.8 : -5, 0]}
+        fontSize={isMobile ? 0.6 : 0.4}
+        color="#9d55ff"
+      >
         {project.techStack.join(" • ")}
       </Text>
 
       <Text
-        position={[-2, -6, 0]}
-        fontSize={0.4}
+        position={[isMobile ? -1.8 : -2, isMobile ? -5 : -6, 0]}
+        fontSize={isMobile ? 0.6 : 0.4}
         color={hoverLive ? "#9d55ff" : "white"}
         onClick={() => window.open(project.liveLink, "_blank")}
         onPointerOver={() => {
@@ -79,8 +91,8 @@ function ProjectCard({ project, position }) {
       </Text>
 
       <Text
-        position={[2, -6, 0]}
-        fontSize={0.4}
+        position={[isMobile ? 1.8 : 2, isMobile ? -5 : -6, 0]}
+        fontSize={isMobile ? 0.6 : 0.4}
         color={hoverCode ? "#9d55ff" : "white"}
         onClick={() => window.open(project.codeLink, "_blank")}
         onPointerOver={() => {
@@ -108,15 +120,32 @@ ProjectCard.propTypes = {
     liveLink: PropTypes.string.isRequired,
   }).isRequired,
   position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  isMobile: PropTypes.bool.isRequired,
 };
 
 function Projects() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <section className="projects">
       <div className="projects-content">
         <h2>Projects</h2>
         <div className="canvas-container">
-          <Canvas camera={{ position: [0, 0, 10], fov: 100 }}>
+          <Canvas
+            camera={{
+              position: [0, 0, isMobile ? 50 : 10],
+              fov: isMobile ? 40 : 100,
+            }}
+          >
             <ambientLight intensity={1} />
             <pointLight position={[10, 10, 10]} intensity={1.5} />
 
@@ -124,9 +153,10 @@ function Projects() {
               <ProjectCard
                 key={project.id}
                 project={project}
+                isMobile={isMobile}
                 position={[
-                  (index % 2) * 15 - 8,
-                  Math.floor(index / 2) * -11 + 7,
+                  isMobile ? 0 : (index % 2) * 15 - 8,
+                  isMobile ? -index * 9 + 15 : Math.floor(index / 2) * -11 + 7,
                   0,
                 ]}
               />
