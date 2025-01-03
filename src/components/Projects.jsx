@@ -2,39 +2,43 @@ import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Text, Image } from "@react-three/drei";
 import PropTypes from "prop-types";
+import lostAndFoundImg from "../assets/lost-and-found.jpg";
+import cardVaultImg from "../assets/card-vault.jpg";
+import zetaMoviesImg from "../assets/zeta-movies.jpg";
+import nandosCakesImg from "../assets/nandos-cakes.jpg";
 
 const projectsData = [
   {
     id: 1,
-    name: "E-Commerce Platform",
-    mainImage: "https://picsum.photos/800/500?random=1",
-    techStack: ["React", "Node.js", "MongoDB", "Express"],
-    codeLink: "https://github.com/...",
-    liveLink: "https://project1.com",
+    name: "Lost and Found",
+    mainImage: lostAndFoundImg,
+    techStack: ["MongoDB", "Express", "React", "Node.js"],
+    codeLink: "https://github.com/ericcapiz/lost-and-found",
+    liveLink: "https://lost-and-found-rosy.vercel.app/",
   },
   {
     id: 2,
-    name: "Task Management App",
-    mainImage: "https://picsum.photos/800/500?random=2",
-    techStack: ["React", "Firebase", "Material-UI", "SCSS"],
-    codeLink: "https://github.com/...",
-    liveLink: "https://project2.com",
+    name: "Card Vault",
+    mainImage: cardVaultImg,
+    techStack: ["TypeScript", "MERN Stack", "Google Vision API", "OCR"],
+    codeLink: "https://github.com/ericcapiz/card-vault",
+    liveLink: "https://card-vault-app.vercel.app/",
   },
   {
     id: 3,
-    name: "Weather Dashboard",
-    mainImage: "https://picsum.photos/800/500?random=3",
-    techStack: ["React", "Redux", "OpenWeather API", "ChartJS"],
-    codeLink: "https://github.com/...",
-    liveLink: "https://project3.com",
+    name: "Zeta Movies",
+    mainImage: zetaMoviesImg,
+    techStack: ["React", "TypeScript", "TMDB API"],
+    codeLink: "https://github.com/ericcapiz/zeta-movies",
+    liveLink: "https://zeta-movies.vercel.app/",
   },
   {
     id: 4,
-    name: "Social Media Dashboard",
-    mainImage: "https://picsum.photos/800/500?random=4",
-    techStack: ["React", "TypeScript", "GraphQL", "TailwindCSS"],
-    codeLink: "https://github.com/...",
-    liveLink: "https://project4.com",
+    name: "Nando's Cakes",
+    mainImage: nandosCakesImg,
+    techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
+    codeLink: "https://github.com/ericcapiz/nandos_cakes",
+    liveLink: "https://nandos-cakes.vercel.app/",
   },
 ];
 
