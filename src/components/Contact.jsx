@@ -9,7 +9,7 @@ function Contact() {
     if (status === "success") {
       const timer = setTimeout(() => {
         setStatus("");
-      }, 5000); // Clear after 5 seconds
+      }, 5000);
 
       return () => clearTimeout(timer);
     }
@@ -27,13 +27,11 @@ function Contact() {
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       .then(
-        (result) => {
-          console.log(result.text);
+        () => {
           setStatus("success");
           form.current.reset();
         },
-        (error) => {
-          console.log(error.text);
+        () => {
           setStatus("error");
         }
       );

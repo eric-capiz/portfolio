@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     hmr: true,
     watch: {
-      usePolling: true, // This might help with file system watching
+      usePolling: true,
     },
   },
 });

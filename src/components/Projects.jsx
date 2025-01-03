@@ -20,7 +20,7 @@ const projectsData = [
     id: 2,
     name: "Card Vault",
     mainImage: cardVaultImg,
-    techStack: ["TypeScript", "MERN Stack", "Google Vision API", "OCR"],
+    techStack: ["TypeScript", "MERN", "GCP Vision", "OCR"],
     codeLink: "https://github.com/ericcapiz/card-vault",
     liveLink: "https://card-vault-app.vercel.app/",
   },

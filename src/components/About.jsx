@@ -14,19 +14,17 @@ function About() {
       gsap.fromTo(
         ".about h2",
         {
-          clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
           opacity: 0,
-          y: 50,
+          y: 30,
         },
         {
-          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 1.2,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: aboutRef.current,
             start: "top center+=100",
-            end: "bottom center-=100",
             toggleActions: "play reverse play reverse",
           },
         }
@@ -37,20 +35,18 @@ function About() {
         gsap.fromTo(
           para,
           {
-            clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
             opacity: 0,
             y: 30,
           },
           {
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            delay: index * 0.2,
+            duration: 1.2,
+            delay: index * 0.4,
+            ease: "power2.out",
             scrollTrigger: {
               trigger: para,
               start: "top center+=200",
-              end: "bottom center-=100",
               toggleActions: "play reverse play reverse",
             },
           }
