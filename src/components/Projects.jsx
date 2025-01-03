@@ -1,7 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Text, Image } from "@react-three/drei";
-import * as THREE from "three";
+import PropTypes from "prop-types";
 
 const projectsData = [
   {
@@ -40,6 +40,8 @@ const projectsData = [
 
 function ProjectCard({ project, position }) {
   const meshRef = useRef();
+  const [hoverLive, setHoverLive] = useState(false);
+  const [hoverCode, setHoverCode] = useState(false);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
@@ -47,17 +49,8 @@ function ProjectCard({ project, position }) {
     meshRef.current.rotation.y = Math.sin(time * 0.5) * 0.2;
   });
 
-  const handleClick = () => {
-    window.open(project.liveLink, "_blank");
-  };
-
   return (
-    <group
-      ref={meshRef}
-      position={position}
-      onClick={handleClick}
-      cursor="pointer"
-    >
+    <group ref={meshRef} position={position} cursor="pointer">
       <Image url={project.mainImage} scale={[10, 6]} position={[0, 0, 0]} />
 
       <Text position={[0, -4, 0]} fontSize={0.7} color="white">
@@ -67,9 +60,55 @@ function ProjectCard({ project, position }) {
       <Text position={[0, -5, 0]} fontSize={0.4} color="#9d55ff">
         {project.techStack.join(" • ")}
       </Text>
+
+      <Text
+        position={[-2, -6, 0]}
+        fontSize={0.4}
+        color={hoverLive ? "#9d55ff" : "white"}
+        onClick={() => window.open(project.liveLink, "_blank")}
+        onPointerOver={() => {
+          setHoverLive(true);
+          document.body.style.cursor = "pointer";
+        }}
+        onPointerOut={() => {
+          setHoverLive(false);
+          document.body.style.cursor = "auto";
+        }}
+      >
+        Live Site
+      </Text>
+
+      <Text
+        position={[2, -6, 0]}
+        fontSize={0.4}
+        color={hoverCode ? "#9d55ff" : "white"}
+        onClick={() => window.open(project.codeLink, "_blank")}
+        onPointerOver={() => {
+          setHoverCode(true);
+          document.body.style.cursor = "pointer";
+        }}
+        onPointerOut={() => {
+          setHoverCode(false);
+          document.body.style.cursor = "auto";
+        }}
+      >
+        View Code
+      </Text>
     </group>
   );
 }
+
+ProjectCard.propTypes = {
+  project: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    mainImage: PropTypes.string.isRequired,
+    techStack: PropTypes.arrayOf(PropTypes.string).isRequired,
+    codeLink: PropTypes.string.isRequired,
+    liveLink: PropTypes.string.isRequired,
+  }).isRequired,
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+};
 
 function Projects() {
   return (
