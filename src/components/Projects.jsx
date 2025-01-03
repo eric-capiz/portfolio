@@ -136,7 +136,7 @@ function Projects() {
   }, []);
 
   return (
-    <section className="projects">
+    <section className="projects" id="projects">
       <div className="projects-content">
         <h2>Projects</h2>
         <div className="canvas-container">

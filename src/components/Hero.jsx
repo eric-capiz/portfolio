@@ -1,4 +1,11 @@
+import { useCallback } from "react";
+
 function Hero() {
+  const handleScroll = useCallback(() => {
+    const projectsSection = document.getElementById("projects");
+    projectsSection.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
   return (
     <section className="hero">
       <span className="subtitle">FULL STACK DEVELOPER</span>
@@ -10,7 +17,7 @@ function Hero() {
         Hi, Im Eric, a developer focused on creating clean, efficient web
         applications
       </p>
-      <button className="cta">
+      <button className="cta" onClick={handleScroll}>
         View Sample Projects <span className="arrow">→</span>
       </button>
     </section>
