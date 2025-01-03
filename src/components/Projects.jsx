@@ -49,8 +49,8 @@ function ProjectCard({ project, position, isMobile }) {
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
-    meshRef.current.position.y = position[1] + Math.sin(time) * 0.3;
-    meshRef.current.rotation.y = Math.sin(time * 0.5) * 0.2;
+    meshRef.current.position.y = position[1] + Math.sin(time * 1.5) * 0.9;
+    meshRef.current.rotation.y = Math.sin(time * 0.9) * 0.2;
   });
 
   return (
