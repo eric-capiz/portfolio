@@ -8,7 +8,7 @@ function Hero() {
 
   return (
     <section className="hero">
-      <span className="subtitle">FULL STACK DEVELOPER</span>
+      <span className="subtitle">FULL-STACK DEVELOPER</span>
       <h1 className="title">
         Building Digital Solutions
         <span className="highlight"> That Matter</span>
