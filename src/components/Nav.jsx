@@ -1,6 +1,7 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import { useState } from "react";
+import { logResumeDownload } from "../analytics";
 
 function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,6 +13,7 @@ function Nav() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    logResumeDownload();
   };
 
   const handleNavClick = (e) => {
