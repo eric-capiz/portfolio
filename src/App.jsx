@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { details } from "./details";
+import { logPageView } from "./analytics";
 import Hero from "./components/Hero";
 import Nav from "./components/Nav";
 import About from "./components/About";
@@ -10,7 +10,7 @@ import Footer from "./components/Footer";
 
 function App() {
   useEffect(() => {
-    details();
+    logPageView();
   }, []);
 
   return (
