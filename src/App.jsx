@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { details } from "./details";
 import Hero from "./components/Hero";
 import Nav from "./components/Nav";
 import About from "./components/About";
@@ -7,6 +9,10 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 function App() {
+  useEffect(() => {
+    details();
+  }, []);
+
   return (
     <div className="app">
       <div className="grid-overlay"></div>
