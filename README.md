@@ -4,7 +4,7 @@ A modern, interactive portfolio website built with React, Three.js, and Vite, sh
 
 ## 🚀 Live Demo
 
-[View Live Site](your-deployed-site-url)
+[View Live Site](https://www.ericcapiz.com/)
 
 ## ✨ Features
 
