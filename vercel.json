@@ -1,7 +1,7 @@
 {
   "redirects": [
     {
-      "source": "https://eric-capiz-portfolio.vercel.app",
+      "source": "/",
       "destination": "https://www.ericcapiz.com",
       "permanent": true
     }
