@@ -2,7 +2,7 @@
 
 A modern, interactive portfolio website built with React, Three.js, and Vite, showcasing my projects and skills as a Full Stack Developer.
 
-## 🚀 Live Demo
+## 🚀 My Portfolio
 
 [View Live Site](https://www.ericcapiz.com/)
 
