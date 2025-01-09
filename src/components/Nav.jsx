@@ -1,11 +1,19 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import { useState } from "react";
+import Analytics from "../services/analytics";
 
 function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleResumeDownload = () => {
+    Analytics.trackAction({
+      type: "button",
+      element: "button",
+      text: "Resume Download",
+      url: "/Resume.pdf",
+    });
+
     const link = document.createElement("a");
     link.href = "/Resume.pdf";
     link.download = "Eric_Capiz_Resume.pdf";
@@ -31,6 +39,24 @@ function Nav() {
         behavior: "smooth",
       });
     }
+  };
+
+  const handleGithubClick = () => {
+    Analytics.trackAction({
+      type: "link",
+      element: "icon",
+      text: "GitHub Profile",
+      url: "https://github.com/ericcapiz",
+    });
+  };
+
+  const handleLinkedInClick = () => {
+    Analytics.trackAction({
+      type: "link",
+      element: "icon",
+      text: "LinkedIn Profile",
+      url: "https://www.linkedin.com/in/eric-capiz",
+    });
   };
 
   return (
@@ -63,6 +89,7 @@ function Nav() {
           target="_blank"
           rel="noopener noreferrer"
           className="icon-link"
+          onClick={handleGithubClick}
         >
           <FaGithub size={24} />
         </a>
@@ -71,6 +98,7 @@ function Nav() {
           target="_blank"
           rel="noopener noreferrer"
           className="icon-link"
+          onClick={handleLinkedInClick}
         >
           <FaLinkedin size={24} />
         </a>

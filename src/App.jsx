@@ -5,8 +5,19 @@ import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import Analytics from "./services/analytics";
+import { useEffect, useRef } from "react";
 
 function App() {
+  const sessionStarted = useRef(false);
+
+  useEffect(() => {
+    if (!sessionStarted.current) {
+      Analytics.startSession();
+      sessionStarted.current = true;
+    }
+  }, []);
+
   return (
     <div className="app">
       <div className="grid-overlay"></div>

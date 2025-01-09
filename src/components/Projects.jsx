@@ -6,6 +6,7 @@ import lostAndFoundImg from "../assets/lost-and-found.jpg";
 import cardVaultImg from "../assets/card-vault.jpg";
 import zetaMoviesImg from "../assets/zeta-movies.jpg";
 import nandosCakesImg from "../assets/nandos-cakes.jpg";
+import Analytics from "../services/analytics";
 
 const projectsData = [
   {
@@ -53,6 +54,26 @@ function ProjectCard({ project, position, isMobile }) {
     meshRef.current.rotation.y = Math.sin(time * 0.9) * 0.2;
   });
 
+  const handleLiveSiteClick = () => {
+    Analytics.trackAction({
+      type: "link",
+      element: "text",
+      text: `${project.name} - Live Site`,
+      url: project.liveLink,
+    });
+    window.open(project.liveLink, "_blank");
+  };
+
+  const handleCodeClick = () => {
+    Analytics.trackAction({
+      type: "link",
+      element: "text",
+      text: `${project.name} - View Code`,
+      url: project.codeLink,
+    });
+    window.open(project.codeLink, "_blank");
+  };
+
   return (
     <group ref={meshRef} position={position}>
       <Image
@@ -81,7 +102,7 @@ function ProjectCard({ project, position, isMobile }) {
         position={[isMobile ? -1.8 : -2, isMobile ? -5 : -6, 0]}
         fontSize={isMobile ? 0.6 : 0.4}
         color={hoverLive ? "#9d55ff" : "white"}
-        onClick={() => window.open(project.liveLink, "_blank")}
+        onClick={handleLiveSiteClick}
         onPointerOver={() => {
           setHoverLive(true);
           document.body.style.cursor = "pointer";
@@ -98,7 +119,7 @@ function ProjectCard({ project, position, isMobile }) {
         position={[isMobile ? 1.8 : 2, isMobile ? -5 : -6, 0]}
         fontSize={isMobile ? 0.6 : 0.4}
         color={hoverCode ? "#9d55ff" : "white"}
-        onClick={() => window.open(project.codeLink, "_blank")}
+        onClick={handleCodeClick}
         onPointerOver={() => {
           setHoverCode(true);
           document.body.style.cursor = "pointer";
