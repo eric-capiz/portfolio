@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { logPageView } from "./analytics";
 import Hero from "./components/Hero";
 import Nav from "./components/Nav";
 import About from "./components/About";
@@ -9,10 +7,6 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 function App() {
-  useEffect(() => {
-    logPageView();
-  }, []);
-
   return (
     <div className="app">
       <div className="grid-overlay"></div>
