@@ -7,6 +7,7 @@ import cardVaultImg from "../assets/card-vault.jpg";
 import nandosCakesImg from "../assets/nandos-cakes.jpg";
 import Analytics from "../services/analytics";
 import BarberShopImg from "../assets/barbershop.jpg";
+import * as THREE from "three";
 
 const projectsData = [
   {
@@ -43,15 +44,62 @@ const projectsData = [
   },
 ];
 
-function ProjectCard({ project, position, isMobile }) {
+function ProjectCard({ project, position, isMobile, index, inView }) {
   const meshRef = useRef();
-  const [hoverLive, setHoverLive] = useState(false);
-  const [hoverCode, setHoverCode] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const startTimeRef = useRef(null);
+  const initialDelay = 0.25;
 
   useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    meshRef.current.position.y = position[1] + Math.sin(time * 1.5) * 0.9;
-    meshRef.current.rotation.y = Math.sin(time * 0.9) * 0.2;
+    if (!meshRef.current) return;
+
+    // Start timer when coming into view
+    if (inView && startTimeRef.current === null) {
+      startTimeRef.current = state.clock.getElapsedTime() + initialDelay; // Add delay here
+    }
+    // Reset timer when out of view
+    if (!inView) {
+      startTimeRef.current = null;
+    }
+
+    // Calculate animation time from when section came into view (plus delay)
+    const time = inView
+      ? Math.max(0, state.clock.getElapsedTime() - startTimeRef.current)
+      : 0;
+    const delay = index * 0.2;
+    const animationProgress = Math.min(Math.max(time - delay, 0), 1);
+
+    const startX = 0;
+    const startY = 0;
+    const startRotation = -Math.PI / 2;
+
+    const endX = position[0];
+    const endY = position[1];
+    const endRotation = 0;
+
+    const ease = Math.sin((animationProgress * Math.PI) / 2);
+
+    meshRef.current.position.x = THREE.MathUtils.lerp(startX, endX, ease);
+    meshRef.current.position.y = THREE.MathUtils.lerp(startY, endY, ease);
+    meshRef.current.rotation.z = THREE.MathUtils.lerp(
+      startRotation,
+      endRotation,
+      ease
+    );
+
+    if (hovered) {
+      meshRef.current.position.z = THREE.MathUtils.lerp(
+        meshRef.current.position.z,
+        1,
+        0.1
+      );
+    } else {
+      meshRef.current.position.z = THREE.MathUtils.lerp(
+        meshRef.current.position.z,
+        0,
+        0.1
+      );
+    }
   });
 
   const handleLiveSiteClick = () => {
@@ -75,7 +123,18 @@ function ProjectCard({ project, position, isMobile }) {
   };
 
   return (
-    <group ref={meshRef} position={position}>
+    <group
+      ref={meshRef}
+      position={[0, 0, 0]}
+      onPointerOver={() => {
+        setHovered(true);
+        document.body.style.cursor = "pointer";
+      }}
+      onPointerOut={() => {
+        setHovered(false);
+        document.body.style.cursor = "auto";
+      }}
+    >
       <Image
         url={project.mainImage}
         scale={isMobile ? [6, 4] : [10, 6]}
@@ -101,16 +160,8 @@ function ProjectCard({ project, position, isMobile }) {
       <Text
         position={[isMobile ? -1.8 : -2, isMobile ? -5 : -6, 0]}
         fontSize={isMobile ? 0.6 : 0.4}
-        color={hoverLive ? "#9d55ff" : "white"}
+        color={hovered ? "#9d55ff" : "white"}
         onClick={handleLiveSiteClick}
-        onPointerOver={() => {
-          setHoverLive(true);
-          document.body.style.cursor = "pointer";
-        }}
-        onPointerOut={() => {
-          setHoverLive(false);
-          document.body.style.cursor = "auto";
-        }}
       >
         Live Site
       </Text>
@@ -118,16 +169,8 @@ function ProjectCard({ project, position, isMobile }) {
       <Text
         position={[isMobile ? 1.8 : 2, isMobile ? -5 : -6, 0]}
         fontSize={isMobile ? 0.6 : 0.4}
-        color={hoverCode ? "#9d55ff" : "white"}
+        color={hovered ? "#9d55ff" : "white"}
         onClick={handleCodeClick}
-        onPointerOver={() => {
-          setHoverCode(true);
-          document.body.style.cursor = "pointer";
-        }}
-        onPointerOut={() => {
-          setHoverCode(false);
-          document.body.style.cursor = "auto";
-        }}
       >
         View Code
       </Text>
@@ -146,10 +189,14 @@ ProjectCard.propTypes = {
   }).isRequired,
   position: PropTypes.arrayOf(PropTypes.number).isRequired,
   isMobile: PropTypes.bool.isRequired,
+  index: PropTypes.number.isRequired,
+  inView: PropTypes.bool.isRequired,
 };
 
 function Projects() {
   const [isMobile, setIsMobile] = useState(false);
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -157,11 +204,28 @@ function Projects() {
     };
     checkMobile();
     window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
   }, []);
 
   return (
-    <section className="projects" id="projects">
+    <section className="projects" id="projects" ref={sectionRef}>
       <div className="projects-content">
         <h2>Projects</h2>
         <div className="canvas-container">
@@ -179,6 +243,8 @@ function Projects() {
                 key={project.id}
                 project={project}
                 isMobile={isMobile}
+                index={index}
+                inView={inView}
                 position={[
                   isMobile ? 0 : (index % 2) * 15 - 8,
                   isMobile ? -index * 9 + 15 : Math.floor(index / 2) * -11 + 7,
