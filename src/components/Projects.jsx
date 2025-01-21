@@ -4,9 +4,9 @@ import { Text, Image } from "@react-three/drei";
 import PropTypes from "prop-types";
 import lostAndFoundImg from "../assets/lost-and-found.jpg";
 import cardVaultImg from "../assets/card-vault.jpg";
-import zetaMoviesImg from "../assets/zeta-movies.jpg";
 import nandosCakesImg from "../assets/nandos-cakes.jpg";
 import Analytics from "../services/analytics";
+import BarberShopImg from "../assets/barbershop.jpg";
 
 const projectsData = [
   {
@@ -27,11 +27,11 @@ const projectsData = [
   },
   {
     id: 3,
-    name: "Zeta Movies",
-    mainImage: zetaMoviesImg,
-    techStack: ["React", "TypeScript", "TMDB API"],
-    codeLink: "https://github.com/ericcapiz/zeta-movies",
-    liveLink: "https://zeta-movies.vercel.app/",
+    name: "Sanchez Barbershop",
+    mainImage: BarberShopImg,
+    techStack: ["MERN", "TypeScript", "React Query", "TanStack"],
+    codeLink: "https://github.com/ericcapiz/barbershop",
+    liveLink: "https://barbershop-pi-three.vercel.app/",
   },
   {
     id: 4,
