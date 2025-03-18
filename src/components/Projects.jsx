@@ -35,7 +35,7 @@ const projectsData = [
   },
   {
     id: 4,
-    name: "Course Correct-1",
+    name: "Course Correct",
     mainImage: courseCorrectImg,
     techStack: ["MongoDB", "Express", "React", "Node.js"],
     codeLink: "https://github.com/ericcapiz/course-correct",
