@@ -6,6 +6,7 @@ import nandosCakesImg from "../assets/nandos-cakes.jpg";
 import courseCorrectImg from "../assets/course-correct.jpg";
 import Analytics from "../services/analytics";
 import BarberShopImg from "../assets/barbershop.jpg";
+import kumikoImg from "../assets/kumiko.jpg";
 
 const projectsData = [
   {
@@ -42,6 +43,15 @@ const projectsData = [
   },
   {
     id: 5,
+    name: "Kumiko Component Library",
+    mainImage: kumikoImg,
+    techStack: ["React", "TypeScript", "Storybook", "SCSS"],
+
+    liveLink:
+      "https://kumiko-dev.icrossing.com/?path=/docs/components-link-all-stories--docs",
+  },
+  {
+    id: 6,
     name: "Nando's Cakes",
     mainImage: nandosCakesImg,
     techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
@@ -66,9 +76,9 @@ function ProjectCard({ project }) {
       type: "link",
       element: "text",
       text: `${project.name} - View Code`,
-      url: project.codeLink,
+      url: project?.codeLink,
     });
-    window.open(project.codeLink, "_blank");
+    window.open(project?.codeLink, "_blank");
   };
 
   return (
@@ -77,7 +87,7 @@ function ProjectCard({ project }) {
       <h3>{project.name}</h3>
       <p>{project.techStack.join(" • ")}</p>
       <button onClick={handleLiveSiteClick}>Live Site</button>
-      <button onClick={handleCodeClick}>View Code</button>
+      {project.codeLink && <button onClick={handleCodeClick}>View Code</button>}
     </div>
   );
 }
