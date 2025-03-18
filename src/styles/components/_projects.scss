@@ -23,6 +23,15 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
+
+      @media (max-width: 1024px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
     }
 
     .project-card {
@@ -78,6 +87,32 @@
         border-color: #9d55ff;
         box-shadow: 0 8px 16px rgba(157, 85, 255, 0.2);
       }
+
+      @media (max-width: 768px) {
+        padding: 1rem;
+
+        img {
+          max-height: 200px;
+          object-fit: cover;
+        }
+
+        h3 {
+          font-size: 1.3rem;
+        }
+
+        p {
+          font-size: 0.9rem;
+        }
+
+        button {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+      }
     }
+  }
+
+  @media (max-width: 768px) {
+    padding: 4rem 1rem;
   }
 }

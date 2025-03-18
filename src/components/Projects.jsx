@@ -98,7 +98,7 @@ ProjectCard.propTypes = {
     name: PropTypes.string.isRequired,
     mainImage: PropTypes.string.isRequired,
     techStack: PropTypes.arrayOf(PropTypes.string).isRequired,
-    codeLink: PropTypes.string.isRequired,
+    codeLink: PropTypes.string,
     liveLink: PropTypes.string.isRequired,
   }).isRequired,
   isMobile: PropTypes.bool.isRequired,
