@@ -14,8 +14,9 @@ function Hero() {
         <span className="highlight"> That Matter</span>
       </h1>
       <p className="intro">
-        Hi, Im Eric, a developer focused on creating clean, efficient web
-        applications
+        Hi, I&apos;m Eric, a developer dedicated to building sleek, efficient,
+        and user-friendly web experiences with clean, scalable, and maintainable
+        code.
       </p>
       <button className="cta" onClick={handleScroll}>
         View Sample Projects <span className="arrow">→</span>

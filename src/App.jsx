@@ -24,8 +24,8 @@ function App() {
       <Nav />
       <Hero />
       <About />
-      <Skills />
       <Projects />
+      <Skills />
       <Contact />
       <Footer />
     </div>
