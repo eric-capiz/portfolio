@@ -55,12 +55,12 @@ A MERN stack application with TypeScript and OCR for card reading using Google V
 - [Live Site](https://card-vault-app.vercel.app/)
 - [GitHub](https://github.com/ericcapiz/card-vault)
 
-### Zeta Movies
+### Course Correct
 
-A React application with TypeScript using TMDB API for movie details.
+A MERN Stack applicaition for student and tutors to connect
 
-- [Live Site](https://zeta-movies.vercel.app/)
-- [GitHub](https://github.com/ericcapiz/zeta-movies)
+- [Live Site](https://course-correct-red.vercel.app/)
+- [GitHub](https://github.com/ericcapiz/course-correct)
 
 ### Nando's Cakes
 
