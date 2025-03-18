@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import lostAndFoundImg from "../assets/lost-and-found.jpg";
 import cardVaultImg from "../assets/card-vault.jpg";
 import nandosCakesImg from "../assets/nandos-cakes.jpg";
+import courseCorrectImg from "../assets/course-correct.jpg";
 import Analytics from "../services/analytics";
 import BarberShopImg from "../assets/barbershop.jpg";
 import * as THREE from "three";
@@ -36,6 +37,14 @@ const projectsData = [
   },
   {
     id: 4,
+    name: "Course Correct",
+    mainImage: courseCorrectImg,
+    techStack: ["MongoDB", "Express", "React", "Node.js"],
+    codeLink: "https://github.com/ericcapiz/course-correct",
+    liveLink: "https://course-correct-red.vercel.app/",
+  },
+  {
+    id: 5,
     name: "Nando's Cakes",
     mainImage: nandosCakesImg,
     techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
