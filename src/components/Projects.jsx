@@ -1,6 +1,4 @@
-import { useRef, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Text, Image } from "@react-three/drei";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import lostAndFoundImg from "../assets/lost-and-found.jpg";
 import cardVaultImg from "../assets/card-vault.jpg";
@@ -8,7 +6,6 @@ import nandosCakesImg from "../assets/nandos-cakes.jpg";
 import courseCorrectImg from "../assets/course-correct.jpg";
 import Analytics from "../services/analytics";
 import BarberShopImg from "../assets/barbershop.jpg";
-import * as THREE from "three";
 
 const projectsData = [
   {
@@ -37,7 +34,7 @@ const projectsData = [
   },
   {
     id: 4,
-    name: "Course Correct",
+    name: "Course Correct-1",
     mainImage: courseCorrectImg,
     techStack: ["MongoDB", "Express", "React", "Node.js"],
     codeLink: "https://github.com/ericcapiz/course-correct",
@@ -53,64 +50,7 @@ const projectsData = [
   },
 ];
 
-function ProjectCard({ project, position, isMobile, index, inView }) {
-  const meshRef = useRef();
-  const [hovered, setHovered] = useState(false);
-  const startTimeRef = useRef(null);
-  const initialDelay = 0.25;
-
-  useFrame((state) => {
-    if (!meshRef.current) return;
-
-    // Start timer when coming into view
-    if (inView && startTimeRef.current === null) {
-      startTimeRef.current = state.clock.getElapsedTime() + initialDelay; // Add delay here
-    }
-    // Reset timer when out of view
-    if (!inView) {
-      startTimeRef.current = null;
-    }
-
-    // Calculate animation time from when section came into view (plus delay)
-    const time = inView
-      ? Math.max(0, state.clock.getElapsedTime() - startTimeRef.current)
-      : 0;
-    const delay = index * 0.2;
-    const animationProgress = Math.min(Math.max(time - delay, 0), 1);
-
-    const startX = 0;
-    const startY = 0;
-    const startRotation = -Math.PI / 2;
-
-    const endX = position[0];
-    const endY = position[1];
-    const endRotation = 0;
-
-    const ease = Math.sin((animationProgress * Math.PI) / 2);
-
-    meshRef.current.position.x = THREE.MathUtils.lerp(startX, endX, ease);
-    meshRef.current.position.y = THREE.MathUtils.lerp(startY, endY, ease);
-    meshRef.current.rotation.z = THREE.MathUtils.lerp(
-      startRotation,
-      endRotation,
-      ease
-    );
-
-    if (hovered) {
-      meshRef.current.position.z = THREE.MathUtils.lerp(
-        meshRef.current.position.z,
-        1,
-        0.1
-      );
-    } else {
-      meshRef.current.position.z = THREE.MathUtils.lerp(
-        meshRef.current.position.z,
-        0,
-        0.1
-      );
-    }
-  });
-
+function ProjectCard({ project }) {
   const handleLiveSiteClick = () => {
     Analytics.trackAction({
       type: "link",
@@ -132,58 +72,13 @@ function ProjectCard({ project, position, isMobile, index, inView }) {
   };
 
   return (
-    <group
-      ref={meshRef}
-      position={[0, 0, 0]}
-      onPointerOver={() => {
-        setHovered(true);
-        document.body.style.cursor = "pointer";
-      }}
-      onPointerOut={() => {
-        setHovered(false);
-        document.body.style.cursor = "auto";
-      }}
-    >
-      <Image
-        url={project.mainImage}
-        scale={isMobile ? [6, 4] : [10, 6]}
-        position={[0, 0, 0]}
-      />
-
-      <Text
-        position={[0, isMobile ? -2.8 : -4, 0]}
-        fontSize={isMobile ? 0.6 : 0.7}
-        color="white"
-      >
-        {project.name}
-      </Text>
-
-      <Text
-        position={[0, isMobile ? -3.8 : -5, 0]}
-        fontSize={isMobile ? 0.6 : 0.4}
-        color="#9d55ff"
-      >
-        {project.techStack.join(" • ")}
-      </Text>
-
-      <Text
-        position={[isMobile ? -1.8 : -2, isMobile ? -5 : -6, 0]}
-        fontSize={isMobile ? 0.6 : 0.4}
-        color={hovered ? "#9d55ff" : "white"}
-        onClick={handleLiveSiteClick}
-      >
-        Live Site
-      </Text>
-
-      <Text
-        position={[isMobile ? 1.8 : 2, isMobile ? -5 : -6, 0]}
-        fontSize={isMobile ? 0.6 : 0.4}
-        color={hovered ? "#9d55ff" : "white"}
-        onClick={handleCodeClick}
-      >
-        View Code
-      </Text>
-    </group>
+    <div className="project-card">
+      <img src={project.mainImage} alt={project.name} />
+      <h3>{project.name}</h3>
+      <p>{project.techStack.join(" • ")}</p>
+      <button onClick={handleLiveSiteClick}>Live Site</button>
+      <button onClick={handleCodeClick}>View Code</button>
+    </div>
   );
 }
 
@@ -196,16 +91,11 @@ ProjectCard.propTypes = {
     codeLink: PropTypes.string.isRequired,
     liveLink: PropTypes.string.isRequired,
   }).isRequired,
-  position: PropTypes.arrayOf(PropTypes.number).isRequired,
   isMobile: PropTypes.bool.isRequired,
-  index: PropTypes.number.isRequired,
-  inView: PropTypes.bool.isRequired,
 };
 
 function Projects() {
   const [isMobile, setIsMobile] = useState(false);
-  const [inView, setInView] = useState(false);
-  const sectionRef = useRef();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -214,54 +104,23 @@ function Projects() {
     checkMobile();
     window.addEventListener("resize", checkMobile);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setInView(entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
     return () => {
       window.removeEventListener("resize", checkMobile);
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
     };
   }, []);
 
   return (
-    <section className="projects" id="projects" ref={sectionRef}>
+    <section className="projects" id="projects">
       <div className="projects-content">
         <h2>Projects</h2>
-        <div className="canvas-container">
-          <Canvas
-            camera={{
-              position: [0, 0, isMobile ? 50 : 10],
-              fov: isMobile ? 40 : 100,
-            }}
-          >
-            <ambientLight intensity={1} />
-            <pointLight position={[10, 10, 10]} intensity={1.5} />
-
-            {projectsData.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                isMobile={isMobile}
-                index={index}
-                inView={inView}
-                position={[
-                  isMobile ? 0 : (index % 2) * 15 - 8,
-                  isMobile ? -index * 9 + 15 : Math.floor(index / 2) * -11 + 7,
-                  0,
-                ]}
-              />
-            ))}
-          </Canvas>
+        <div className="projects-grid">
+          {projectsData.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              isMobile={isMobile}
+            />
+          ))}
         </div>
       </div>
     </section>

@@ -8,7 +8,6 @@ A modern, interactive portfolio website built with React, Three.js, and Vite, sh
 
 ## ✨ Features
 
-- Interactive 3D project cards using Three.js/React Three Fiber
 - Responsive design for mobile and desktop
 - Smooth animations and transitions
 - Project showcase with live demos and code links
@@ -17,9 +16,6 @@ A modern, interactive portfolio website built with React, Three.js, and Vite, sh
 
 - React
 - Vite
-- Three.js
-- React Three Fiber
-- React Three Drei
 - SCSS
 
 ## 🚀 Getting Started
