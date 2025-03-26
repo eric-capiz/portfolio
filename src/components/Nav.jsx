@@ -6,21 +6,21 @@ import Analytics from "../services/analytics";
 function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleResumeDownload = () => {
-    Analytics.trackAction({
-      type: "button",
-      element: "button",
-      text: "Resume Download",
-      url: "/Resume.pdf",
-    });
+  // const handleResumeDownload = () => {
+  //   Analytics.trackAction({
+  //     type: "button",
+  //     element: "button",
+  //     text: "Resume Download",
+  //     url: "/Resume.pdf",
+  //   });
 
-    const link = document.createElement("a");
-    link.href = "/Resume.pdf";
-    link.download = "Eric_Capiz_Resume.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  //   const link = document.createElement("a");
+  //   link.href = "/Resume.pdf";
+  //   link.download = "Eric_Capiz_Resume.pdf";
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   const handleNavClick = (e) => {
     e.preventDefault();
@@ -82,9 +82,9 @@ function Nav() {
         <a href="#contact" onClick={handleNavClick}>
           Contact
         </a>
-        <button onClick={handleResumeDownload} className="resume-link">
+        {/* <button onClick={handleResumeDownload} className="resume-link">
           Resume
-        </button>
+        </button> */}
         <a
           href="https://github.com/ericcapiz"
           target="_blank"
