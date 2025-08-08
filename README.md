@@ -73,5 +73,4 @@ A React application with TypeScript and Framer Motion animations.
 
 - Email: ericcapiz@gmail.com
 - LinkedIn: [Eric Capiz](https://www.linkedin.com/in/eric-capiz/)
-- GitHub: [ericcapiz](https://github.com/ericcapiz)
-  test
+- GitHub: [ericcapiz](https://github.com/eric-capiz)
