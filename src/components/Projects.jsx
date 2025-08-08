@@ -14,7 +14,7 @@ const projectsData = [
     name: "Lost and Found",
     mainImage: lostAndFoundImg,
     techStack: ["MongoDB", "Express", "React", "Node.js"],
-    codeLink: "https://github.com/ericcapiz/lost-and-found",
+    codeLink: "https://github.com/eric-capiz/lost-and-found",
     liveLink: "https://lost-and-found-rosy.vercel.app/",
   },
   {
@@ -22,7 +22,7 @@ const projectsData = [
     name: "Card Vault",
     mainImage: cardVaultImg,
     techStack: ["TypeScript", "MERN", "GCP Vision", "OCR"],
-    codeLink: "https://github.com/ericcapiz/card-vault",
+    codeLink: "https://github.com/eric-capiz/card-vault",
     liveLink: "https://card-vault-app.vercel.app/",
   },
   {
@@ -30,7 +30,7 @@ const projectsData = [
     name: "Sanchez Barbershop",
     mainImage: BarberShopImg,
     techStack: ["MERN", "TypeScript", "React Query", "TanStack"],
-    codeLink: "https://github.com/ericcapiz/barbershop",
+    codeLink: "https://github.com/eric-capiz/barbershop",
     liveLink: "https://barbershop-pi-three.vercel.app/",
   },
   {
@@ -38,7 +38,7 @@ const projectsData = [
     name: "Course Correct",
     mainImage: courseCorrectImg,
     techStack: ["MongoDB", "Express", "React", "Node.js"],
-    codeLink: "https://github.com/ericcapiz/course-correct",
+    codeLink: "https://github.com/eric-capiz/course-correct",
     liveLink: "https://course-correct-red.vercel.app/",
   },
   {
@@ -55,7 +55,7 @@ const projectsData = [
     name: "Nando's Cakes",
     mainImage: nandosCakesImg,
     techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
-    codeLink: "https://github.com/ericcapiz/nandos_cakes",
+    codeLink: "https://github.com/eric-capiz/nandos_cakes",
     liveLink: "https://nandos-cakes.vercel.app/",
   },
 ];

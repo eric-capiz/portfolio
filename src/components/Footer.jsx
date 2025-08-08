@@ -6,7 +6,7 @@ function Footer() {
       <div className="footer-content">
         <div className="social-links">
           <a
-            href="https://github.com/ericcapiz"
+            href="https://github.com/eric-capiz"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"

@@ -46,7 +46,7 @@ function Nav() {
       type: "link",
       element: "icon",
       text: "GitHub Profile",
-      url: "https://github.com/ericcapiz",
+      url: "https://github.com/eric-capiz",
     });
   };
 
@@ -86,7 +86,7 @@ function Nav() {
           Resume
         </button> */}
         <a
-          href="https://github.com/ericcapiz"
+          href="https://github.com/eric-capiz"
           target="_blank"
           rel="noopener noreferrer"
           className="icon-link"

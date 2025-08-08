@@ -46,28 +46,28 @@ A modern, interactive portfolio website built with React, Three.js, and Vite, sh
 A MERN stack application for lost and found items.
 
 - [Live Site](https://lost-and-found-rosy.vercel.app/)
-- [GitHub](https://github.com/ericcapiz/lost-and-found)
+- [GitHub](https://github.com/eric-capiz/lost-and-found)
 
 ### Card Vault
 
 A MERN stack application with TypeScript and OCR for card reading using Google Vision Cloud.
 
 - [Live Site](https://card-vault-app.vercel.app/)
-- [GitHub](https://github.com/ericcapiz/card-vault)
+- [GitHub](https://github.com/eric-capiz/card-vault)
 
 ### Course Correct
 
 A MERN Stack applicaition for student and tutors to connect
 
 - [Live Site](https://course-correct-red.vercel.app/)
-- [GitHub](https://github.com/ericcapiz/course-correct)
+- [GitHub](https://github.com/eric-capiz/course-correct)
 
 ### Nando's Cakes
 
 A React application with TypeScript and Framer Motion animations.
 
 - [Live Site](https://nandos-cakes.vercel.app/)
-- [GitHub](https://github.com/ericcapiz/nandos_cakes)
+- [GitHub](https://github.com/eric-capiz/nandos_cakes)
 
 ## 📫 Contact
 
