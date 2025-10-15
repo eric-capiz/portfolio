@@ -5,6 +5,7 @@ class Analytics {
     this.sectionStartTimes = {};
     this.lastScrollUpdate = Date.now();
     this.scrollUpdateInterval = 5000;
+    this.location = null;
   }
 
   getDeviceType() {
@@ -36,6 +37,103 @@ class Analytics {
     return { browser, version };
   }
 
+  async getLocation() {
+    if (this.location) return this.location;
+
+    try {
+      const response = await fetch("https://ipapi.co/json/");
+      const data = await response.json();
+      this.location = {
+        country: data.country_name,
+        region: data.region,
+        city: data.city,
+        timezone: data.timezone,
+        ip: data.ip,
+      };
+      return this.location;
+    } catch {
+      this.location = {
+        country: "Unknown",
+        region: "Unknown",
+        city: "Unknown",
+        timezone: "Unknown",
+        ip: "Unknown",
+      };
+      return this.location;
+    }
+  }
+
+  getTrafficSource() {
+    const referrer = document.referrer;
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmCampaign = urlParams.get("utm_campaign");
+
+    if (!referrer || referrer === "") {
+      return {
+        type: "direct",
+        source: "Direct",
+        medium: "none",
+        campaign: utmCampaign || "none",
+      };
+    }
+
+    const referrerUrl = new URL(referrer);
+    const hostname = referrerUrl.hostname;
+
+    // Check for social media
+    if (hostname.includes("facebook.com") || hostname.includes("fb.com")) {
+      return {
+        type: "social",
+        source: "Facebook",
+        medium: "social",
+        campaign: utmCampaign || "none",
+      };
+    } else if (hostname.includes("twitter.com") || hostname.includes("x.com")) {
+      return {
+        type: "social",
+        source: "Twitter/X",
+        medium: "social",
+        campaign: utmCampaign || "none",
+      };
+    } else if (hostname.includes("linkedin.com")) {
+      return {
+        type: "social",
+        source: "LinkedIn",
+        medium: "social",
+        campaign: utmCampaign || "none",
+      };
+    } else if (hostname.includes("github.com")) {
+      return {
+        type: "referral",
+        source: "GitHub",
+        medium: "referral",
+        campaign: utmCampaign || "none",
+      };
+    } else if (
+      hostname.includes("google.com") ||
+      hostname.includes("bing.com") ||
+      hostname.includes("yahoo.com")
+    ) {
+      return {
+        type: "search",
+        source: hostname.includes("google.com")
+          ? "Google"
+          : hostname.includes("bing.com")
+          ? "Bing"
+          : "Yahoo",
+        medium: "organic",
+        campaign: utmCampaign || "none",
+      };
+    } else {
+      return {
+        type: "referral",
+        source: hostname,
+        medium: "referral",
+        campaign: utmCampaign || "none",
+      };
+    }
+  }
+
   async startSession() {
     try {
       const deviceInfo = {
@@ -45,6 +143,9 @@ class Analytics {
         screenHeight: window.innerHeight,
       };
 
+      const location = await this.getLocation();
+      const trafficSource = this.getTrafficSource();
+
       const response = await fetch(`${this.baseUrl}/session/start`, {
         method: "POST",
         headers: {
@@ -53,6 +154,8 @@ class Analytics {
         body: JSON.stringify({
           referrer: document.referrer || "Direct",
           deviceInfo,
+          location,
+          trafficSource,
         }),
       });
 
