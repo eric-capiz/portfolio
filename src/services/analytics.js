@@ -49,7 +49,6 @@ class Analytics {
         region: data.region,
         city: data.city,
         timezone: data.timezone,
-        ip: data.ip,
       };
       return this.location;
     } catch {
