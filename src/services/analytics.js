@@ -1,6 +1,7 @@
 class Analytics {
   constructor() {
-    this.baseUrl = "https://analytics-ykxfja.fly.dev/api/analytics";
+    this.baseUrl = "https://analytics-new.fly.dev/api/analytics";
+
     this.sessionId = null;
     this.sectionStartTimes = {};
     this.lastScrollUpdate = Date.now();
