@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import lostAndFoundImg from "../assets/lost-and-found.jpg";
 import cardVaultImg from "../assets/card-vault.jpg";
-import nandosCakesImg from "../assets/nandos-cakes.jpg";
+import sweetDreamsBakeryImg from "../assets/sweet-dreams-bakery.jpg";
 import courseCorrectImg from "../assets/course-correct.jpg";
 import Analytics from "../services/analytics";
 import BarberShopImg from "../assets/barbershop.jpg";
@@ -52,11 +52,11 @@ const projectsData = [
   },
   {
     id: 6,
-    name: "Nando's Cakes",
-    mainImage: nandosCakesImg,
+    name: "Sweet Dreams Bakery",
+    mainImage: sweetDreamsBakeryImg,
     techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
     codeLink: "https://github.com/eric-capiz/nandos_cakes",
-    liveLink: "https://nandos-cakes.vercel.app/",
+    liveLink: "https://bakery-ec.vercel.app/",
   },
 ];
 

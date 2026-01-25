@@ -62,11 +62,11 @@ A MERN Stack applicaition for student and tutors to connect
 - [Live Site](https://course-correct-red.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/course-correct)
 
-### Nando's Cakes
+### Sweet Dreams Bakery
 
 A React application with TypeScript and Framer Motion animations.
 
-- [Live Site](https://nandos-cakes.vercel.app/)
+- [Live Site](https://bakery-ec.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/nandos_cakes)
 
 ## 📫 Contact
