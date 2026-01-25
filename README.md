@@ -62,12 +62,19 @@ A MERN Stack applicaition for student and tutors to connect
 - [Live Site](https://course-correct-red.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/course-correct)
 
+### Sanchez Barbershop
+
+A full-stack barbershop management system with appointment booking and admin features.
+
+- [Live Site](https://barbershop-pi-three.vercel.app/)
+- [GitHub](https://github.com/eric-capiz/barbershop-booking)
+
 ### Sweet Dreams Bakery
 
 A React application with TypeScript and Framer Motion animations.
 
 - [Live Site](https://bakery-ec.vercel.app/)
-- [GitHub](https://github.com/eric-capiz/nandos_cakes)
+- [GitHub](https://github.com/eric-capiz/bakery)
 
 ## 📫 Contact
 

@@ -30,7 +30,7 @@ const projectsData = [
     name: "Sanchez Barbershop",
     mainImage: BarberShopImg,
     techStack: ["MERN", "TypeScript", "React Query", "TanStack"],
-    codeLink: "https://github.com/eric-capiz/barbershop",
+    codeLink: "https://github.com/eric-capiz/barbershop-booking",
     liveLink: "https://barbershop-pi-three.vercel.app/",
   },
   {
@@ -55,7 +55,7 @@ const projectsData = [
     name: "Sweet Dreams Bakery",
     mainImage: sweetDreamsBakeryImg,
     techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
-    codeLink: "https://github.com/eric-capiz/nandos_cakes",
+    codeLink: "https://github.com/eric-capiz/bakery",
     liveLink: "https://bakery-ec.vercel.app/",
   },
 ];
