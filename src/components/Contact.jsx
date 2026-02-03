@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from "react";
-import emailjs from "@emailjs/browser";
 
 function Contact() {
   const form = useRef();
@@ -15,26 +14,31 @@ function Contact() {
     }
   }, [status]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
 
-    emailjs
-      .sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        form.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-      .then(
-        () => {
-          setStatus("success");
-          form.current.reset();
-        },
-        () => {
-          setStatus("error");
-        }
-      );
+    try {
+      const formData = new FormData(form.current);
+      const data = Object.fromEntries(formData.entries());
+      data._subject = `Portfolio contact from ${data.name}`;
+      data._captcha = "false";
+
+      const response = await fetch("https://formsubmit.co/ericcapiz@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        form.current.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -48,22 +52,22 @@ function Contact() {
           autoComplete="off"
         >
           <div className="form-group">
-            <label htmlFor="from_name">Name</label>
+            <label htmlFor="name">Name</label>
             <input
               type="text"
-              id="from_name"
-              name="from_name"
+              id="name"
+              name="name"
               required
               placeholder="Your name"
               autoComplete="off"
             />
           </div>
           <div className="form-group">
-            <label htmlFor="reply_to">Email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
-              id="reply_to"
-              name="reply_to"
+              id="email"
+              name="email"
               required
               placeholder="Your email"
               autoComplete="off"
