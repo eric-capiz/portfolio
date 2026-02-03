@@ -5,7 +5,7 @@ import cardVaultImg from "../assets/card-vault.jpg";
 import sweetDreamsBakeryImg from "../assets/sweet-dreams-bakery.jpg";
 import courseCorrectImg from "../assets/course-correct.jpg";
 import Analytics from "../services/analytics";
-import BarberShopImg from "../assets/barbershop.jpg";
+import chopShopImg from "../assets/chop-shop.jpg";
 import kumikoImg from "../assets/kumiko.jpg";
 
 const projectsData = [
@@ -27,11 +27,11 @@ const projectsData = [
   },
   {
     id: 3,
-    name: "Sanchez Barbershop",
-    mainImage: BarberShopImg,
+    name: "Chop Shop",
+    mainImage: chopShopImg,
     techStack: ["MERN", "TypeScript", "React Query", "TanStack"],
-    codeLink: "https://github.com/eric-capiz/barbershop-booking",
-    liveLink: "https://barbershop-pi-three.vercel.app/",
+    codeLink: "https://github.com/eric-capiz/chop_shop",
+    liveLink: "https://chop-shop-ec.vercel.app/",
   },
   {
     id: 4,

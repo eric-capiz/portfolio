@@ -62,12 +62,12 @@ A MERN Stack applicaition for student and tutors to connect
 - [Live Site](https://course-correct-red.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/course-correct)
 
-### Sanchez Barbershop
+### Chop Shop
 
-A full-stack barbershop management system with appointment booking and admin features.
+Multi-barber barbershop booking app. Users browse barbers, book appointments, and leave reviews. Barbers manage profiles, services, gallery, and availability; superadmin manages multiple barbers. MERN stack with React 18, TypeScript, TanStack Query, and Zustand.
 
-- [Live Site](https://barbershop-pi-three.vercel.app/)
-- [GitHub](https://github.com/eric-capiz/barbershop-booking)
+- [Live Site](https://chop-shop-ec.vercel.app/)
+- [GitHub](https://github.com/eric-capiz/chop_shop)
 
 ### Sweet Dreams Bakery
 
