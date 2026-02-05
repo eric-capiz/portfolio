@@ -76,6 +76,13 @@ A React application with TypeScript and Framer Motion animations.
 - [Live Site](https://bakery-ec.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/bakery)
 
+### DJ Cosmic Drift
+
+A cosmic DJ experience — Next.js site with an immersive hero (light rays, turntable), plus about, samples, contact, tour dates, and media. Built with Next.js, React 19, TypeScript, Tailwind CSS, and React Bits.
+
+- [Live Site](https://dj-cosmic-drift.vercel.app/)
+- [GitHub](https://github.com/eric-capiz/dj)
+
 ## 📫 Contact
 
 - Email: ericcapiz@gmail.com

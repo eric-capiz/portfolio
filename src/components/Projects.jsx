@@ -7,6 +7,7 @@ import courseCorrectImg from "../assets/course-correct.jpg";
 import Analytics from "../services/analytics";
 import chopShopImg from "../assets/chop-shop.jpg";
 import kumikoImg from "../assets/kumiko.jpg";
+import djImg from "../assets/dj.jpg";
 
 const projectsData = [
   {
@@ -57,6 +58,14 @@ const projectsData = [
     techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
     codeLink: "https://github.com/eric-capiz/bakery",
     liveLink: "https://bakery-ec.vercel.app/",
+  },
+  {
+    id: 7,
+    name: "DJ Cosmic Drift",
+    mainImage: djImg,
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind", "Framer Motion"],
+    codeLink: "https://github.com/eric-capiz/dj",
+    liveLink: "https://dj-cosmic-drift.vercel.app/",
   },
 ];
 
