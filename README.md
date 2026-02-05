@@ -45,27 +45,6 @@ A modern, interactive portfolio website built with React, Three.js, and Vite, sh
 
 ## 📱 Featured Projects
 
-### Lost and Found
-
-A MERN stack application for lost and found items.
-
-- [Live Site](https://lost-and-found-rosy.vercel.app/)
-- [GitHub](https://github.com/eric-capiz/lost-and-found)
-
-### Card Vault
-
-A MERN stack application with TypeScript and OCR for card reading using Google Vision Cloud.
-
-- [Live Site](https://card-vault-app.vercel.app/)
-- [GitHub](https://github.com/eric-capiz/card-vault)
-
-### Course Correct
-
-A MERN Stack applicaition for student and tutors to connect
-
-- [Live Site](https://course-correct-red.vercel.app/)
-- [GitHub](https://github.com/eric-capiz/course-correct)
-
 ### Chop Shop
 
 Multi-barber barbershop booking app. Users browse barbers, book appointments, and leave reviews. Barbers manage profiles, services, gallery, and availability; superadmin manages multiple barbers. MERN stack with React 18, TypeScript, TanStack Query, and Zustand.
@@ -86,6 +65,33 @@ A cosmic DJ experience — Next.js site with an immersive hero (light rays, turn
 
 - [Live Site](https://dj-cosmic-drift.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/dj)
+
+### Course Correct
+
+A MERN Stack applicaition for student and tutors to connect
+
+- [Live Site](https://course-correct-red.vercel.app/)
+- [GitHub](https://github.com/eric-capiz/course-correct)
+
+### Lost and Found
+
+A MERN stack application for lost and found items.
+
+- [Live Site](https://lost-and-found-rosy.vercel.app/)
+- [GitHub](https://github.com/eric-capiz/lost-and-found)
+
+### Card Vault
+
+A MERN stack application with TypeScript and OCR for card reading using Google Vision Cloud.
+
+- [Live Site](https://card-vault-app.vercel.app/)
+- [GitHub](https://github.com/eric-capiz/card-vault)
+
+### Kumiko Component Library
+
+A React component library with TypeScript, Storybook, and SCSS.
+
+- [Live Site](https://kumiko-dev.icrossing.com/?path=/docs/components-link-all-stories--docs)
 
 ## 📫 Contact
 

@@ -12,27 +12,27 @@ import djImg from "../assets/dj.jpg";
 const projectsData = [
   {
     id: 1,
-    name: "Lost and Found",
-    mainImage: lostAndFoundImg,
-    techStack: ["MongoDB", "Express", "React", "Node.js"],
-    codeLink: "https://github.com/eric-capiz/lost-and-found",
-    liveLink: "https://lost-and-found-rosy.vercel.app/",
-  },
-  {
-    id: 2,
-    name: "Card Vault",
-    mainImage: cardVaultImg,
-    techStack: ["TypeScript", "MERN", "GCP Vision", "OCR"],
-    codeLink: "https://github.com/eric-capiz/card-vault",
-    liveLink: "https://card-vault-app.vercel.app/",
-  },
-  {
-    id: 3,
     name: "Chop Shop",
     mainImage: chopShopImg,
     techStack: ["MERN", "TypeScript", "React Query", "TanStack"],
     codeLink: "https://github.com/eric-capiz/chop_shop",
     liveLink: "https://chop-shop-ec.vercel.app/",
+  },
+  {
+    id: 2,
+    name: "Sweet Dreams Bakery",
+    mainImage: sweetDreamsBakeryImg,
+    techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
+    codeLink: "https://github.com/eric-capiz/bakery",
+    liveLink: "https://bakery-ec.vercel.app/",
+  },
+  {
+    id: 3,
+    name: "DJ Cosmic Drift",
+    mainImage: djImg,
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind", "React Bits"],
+    codeLink: "https://github.com/eric-capiz/dj",
+    liveLink: "https://dj-cosmic-drift.vercel.app/",
   },
   {
     id: 4,
@@ -44,28 +44,27 @@ const projectsData = [
   },
   {
     id: 5,
-    name: "Kumiko Component Library",
-    mainImage: kumikoImg,
-    techStack: ["React", "TypeScript", "Storybook", "SCSS"],
-
-    liveLink:
-      "https://kumiko-dev.icrossing.com/?path=/docs/components-link-all-stories--docs",
+    name: "Lost and Found",
+    mainImage: lostAndFoundImg,
+    techStack: ["MongoDB", "Express", "React", "Node.js"],
+    codeLink: "https://github.com/eric-capiz/lost-and-found",
+    liveLink: "https://lost-and-found-rosy.vercel.app/",
   },
   {
     id: 6,
-    name: "Sweet Dreams Bakery",
-    mainImage: sweetDreamsBakeryImg,
-    techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
-    codeLink: "https://github.com/eric-capiz/bakery",
-    liveLink: "https://bakery-ec.vercel.app/",
+    name: "Card Vault",
+    mainImage: cardVaultImg,
+    techStack: ["TypeScript", "MERN", "GCP Vision", "OCR"],
+    codeLink: "https://github.com/eric-capiz/card-vault",
+    liveLink: "https://card-vault-app.vercel.app/",
   },
   {
     id: 7,
-    name: "DJ Cosmic Drift",
-    mainImage: djImg,
-    techStack: ["Next.js", "React", "TypeScript", "Tailwind", "Framer Motion"],
-    codeLink: "https://github.com/eric-capiz/dj",
-    liveLink: "https://dj-cosmic-drift.vercel.app/",
+    name: "Kumiko Component Library",
+    mainImage: kumikoImg,
+    techStack: ["React", "TypeScript", "Storybook", "SCSS"],
+    liveLink:
+      "https://kumiko-dev.icrossing.com/?path=/docs/components-link-all-stories--docs",
   },
 ];
 
