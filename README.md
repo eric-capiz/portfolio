@@ -12,6 +12,10 @@ A modern, interactive portfolio website built with React, Three.js, and Vite, sh
 - Smooth animations and transitions
 - Project showcase with live demos and code links
 
+## 🔄 Feature Updates
+
+- **Project videos** — Replace static project images with looping screen recordings to showcase app UI and interactions
+
 ## 🛠️ Built With
 
 - React
