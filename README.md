@@ -14,7 +14,7 @@ A modern, interactive portfolio website built with React, Three.js, and Vite, sh
 
 ## 🔄 Feature Updates
 
-- **Project videos** — Replace static project images with looping screen recordings to showcase app UI and interactions
+- **Project videos** — Looping screen recordings for project cards (Chop Shop, Sweet Dreams Bakery, DJ Cosmic Drift, Course Correct, Lost and Found); videos play when in view
 
 ## 🛠️ Built With
 
@@ -79,13 +79,6 @@ A MERN stack application for lost and found items.
 
 - [Live Site](https://lost-and-found-rosy.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/lost-and-found)
-
-### Card Vault
-
-A MERN stack application with TypeScript and OCR for card reading using Google Vision Cloud.
-
-- [Live Site](https://card-vault-app.vercel.app/)
-- [GitHub](https://github.com/eric-capiz/card-vault)
 
 ### Kumiko Component Library
 

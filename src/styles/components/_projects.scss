@@ -43,11 +43,18 @@
       text-align: center;
       transition: all 0.3s ease;
 
-      img {
+      img,
+      .project-card-media {
         width: 100%;
         height: auto;
         border-radius: 8px;
         border: 1px solid rgba(157, 85, 255, 0.2);
+        display: block;
+      }
+
+      .project-card-media {
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
       }
 
       h3 {
@@ -91,7 +98,8 @@
       @media (max-width: 768px) {
         padding: 1rem;
 
-        img {
+        img,
+        .project-card-media {
           max-height: 200px;
           object-fit: cover;
         }
