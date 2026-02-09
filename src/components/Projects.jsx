@@ -12,6 +12,12 @@ const projectsData = [
   {
     id: 1,
     name: "Chop Shop",
+    description:
+      "Multi-barber booking app. Users book appointments and leave reviews; admins manage barbers, services, gallery, and availability.",
+    demoLogin: [
+      { role: "Admin", user: "admin0", pass: "admin0" },
+      { role: "User", user: "breezy", pass: "breezy" },
+    ],
     mainImage: chopShopImg,
     techStack: ["MERN", "TypeScript", "React Query", "TanStack"],
     codeLink: "https://github.com/eric-capiz/chop_shop",
@@ -21,6 +27,9 @@ const projectsData = [
   {
     id: 2,
     name: "Sweet Dreams Bakery",
+    description:
+      "Bakery showcase site with samples, contact form, and reviews. Admin dashboard for content management.",
+    demoLogin: [{ role: "Admin", user: "demo", pass: "demo" }],
     mainImage: sweetDreamsBakeryImg,
     techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
     codeLink: "https://github.com/eric-capiz/bakery",
@@ -30,6 +39,8 @@ const projectsData = [
   {
     id: 3,
     name: "DJ Cosmic Drift",
+    description:
+      "Cosmic DJ experience with immersive hero, animated turntable, and sections for about, samples, contact, and tour dates.",
     mainImage: djImg,
     techStack: ["Next.js", "React", "TypeScript", "Tailwind", "React Bits"],
     codeLink: "https://github.com/eric-capiz/dj",
@@ -39,6 +50,12 @@ const projectsData = [
   {
     id: 4,
     name: "Course Correct",
+    description:
+      "Connects students with tutors and study groups. Calendar based booking and subject filtering.",
+    demoLogin: [
+      { role: "Tutor", user: "mariagarcia@example.com", pass: "demo" },
+      { role: "Student", user: "sofiarodriguez@example.com", pass: "demo" },
+    ],
     mainImage: courseCorrectImg,
     techStack: ["MongoDB", "Express", "React", "Node.js"],
     codeLink: "https://github.com/eric-capiz/course-correct",
@@ -48,6 +65,9 @@ const projectsData = [
   {
     id: 5,
     name: "Lost and Found",
+    description:
+      "Report and find lost items. Create posts with images, comment, and receive notifications.",
+    demoLogin: [{ role: "User", user: "breezy", pass: "breezy" }],
     mainImage: lostAndFoundImg,
     techStack: ["MongoDB", "Express", "React", "Node.js"],
     codeLink: "https://github.com/eric-capiz/lost-and-found",
@@ -57,6 +77,8 @@ const projectsData = [
   {
     id: 6,
     name: "Kumiko Component Library",
+    description:
+      "Reusable React components with TypeScript, Storybook documentation, and SCSS styling.",
     mainImage: kumikoImg,
     techStack: ["React", "TypeScript", "Storybook", "SCSS"],
     liveLink:
@@ -73,7 +95,7 @@ function ProjectCard({ project }) {
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.25 }
+      { threshold: 0.25 },
     );
 
     observer.observe(videoRef.current);
@@ -111,23 +133,40 @@ function ProjectCard({ project }) {
 
   return (
     <div className="project-card">
-      {project.videoSrc ? (
-        <video
-          ref={videoRef}
-          src={project.videoSrc}
-          poster={project.mainImage}
-          muted
-          loop
-          playsInline
-          className="project-card-media"
-        />
-      ) : (
-        <img src={project.mainImage} alt={project.name} />
-      )}
+      <div className="project-card-media-wrap">
+        {project.videoSrc ? (
+          <video
+            ref={videoRef}
+            src={project.videoSrc}
+            poster={project.mainImage}
+            muted
+            loop
+            playsInline
+            className="project-card-media"
+          />
+        ) : (
+          <img src={project.mainImage} alt={project.name} />
+        )}
+      </div>
       <h3>{project.name}</h3>
       <p>{project.techStack.join(" • ")}</p>
       <button onClick={handleLiveSiteClick}>Live Site</button>
       {project.codeLink && <button onClick={handleCodeClick}>View Code</button>}
+      {(project.description || project.demoLogin) && (
+        <div className="project-card-overlay">
+          {project.description && <p>{project.description}</p>}
+            {project.demoLogin && project.demoLogin.length > 0 && (
+              <div className="project-card-demo-login">
+                <span>Demo login:</span>
+                {project.demoLogin.map((item) => (
+                  <span key={item.role}>
+                    {item.role}: {item.user} / {item.pass}
+                  </span>
+                ))}
+              </div>
+            )}
+        </div>
+      )}
     </div>
   );
 }
@@ -141,6 +180,14 @@ ProjectCard.propTypes = {
     codeLink: PropTypes.string,
     liveLink: PropTypes.string.isRequired,
     videoSrc: PropTypes.string,
+    description: PropTypes.string,
+    demoLogin: PropTypes.arrayOf(
+      PropTypes.shape({
+        role: PropTypes.string.isRequired,
+        user: PropTypes.string.isRequired,
+        pass: PropTypes.string.isRequired,
+      })
+    ),
   }).isRequired,
   isMobile: PropTypes.bool.isRequired,
 };
