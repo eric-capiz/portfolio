@@ -7,8 +7,20 @@ import Analytics from "../services/analytics";
 import chopShopImg from "../assets/chop-shop.jpg";
 import kumikoImg from "../assets/kumiko.jpg";
 import djImg from "../assets/dj.jpg";
+import leadImg from "../assets/lead.jpg";
 
 const projectsData = [
+  {
+    id: 7,
+    name: "LeadReach",
+    description:
+      "Next.js app for solo outreach: search Google Places by category or business name, pull leads into MongoDB, enrich with optional social hints, and draft outreach using reusable merge-field templates.",
+    demoLogin: [{ role: "Demo", user: "demo", pass: "demo" }],
+    mainImage: leadImg,
+    techStack: ["React", "Next.js", "MongoDB"],
+    codeLink: "https://github.com/eric-capiz/bot",
+    liveLink: "https://lead-reach.vercel.app/",
+  },
   {
     id: 1,
     name: "Chop Shop",
