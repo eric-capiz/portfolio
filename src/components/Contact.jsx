@@ -1,38 +1,60 @@
 import { useRef, useState, useEffect } from "react";
 
+const WEB3_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
+
 function Contact() {
-  const form = useRef();
+  const form = useRef(null);
   const [status, setStatus] = useState("");
 
   useEffect(() => {
     if (status === "success") {
-      const timer = setTimeout(() => {
-        setStatus("");
-      }, 5000);
-
+      const timer = setTimeout(() => setStatus(""), 6000);
       return () => clearTimeout(timer);
     }
   }, [status]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!WEB3_ACCESS_KEY) {
+      setStatus("noconfig");
+      return;
+    }
+
+    const el = form.current;
+    if (!el) return;
+
+    const nameEl = el.elements.namedItem("name");
+    const emailEl = el.elements.namedItem("email");
+    const messageEl = el.elements.namedItem("message");
+
+    const name = nameEl instanceof HTMLInputElement ? nameEl.value : "";
+    const email = emailEl instanceof HTMLInputElement ? emailEl.value : "";
+    const message =
+      messageEl instanceof HTMLTextAreaElement ? messageEl.value : "";
+
     setStatus("sending");
 
     try {
-      const formData = new FormData(form.current);
-      const data = Object.fromEntries(formData.entries());
-      data._subject = `Portfolio contact from ${data.name}`;
-      data._captcha = "false";
-
-      const response = await fetch("https://formsubmit.co/ericcapiz@gmail.com", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3_ACCESS_KEY,
+          subject: `Portfolio contact from ${name}`,
+          from_name: name,
+          email,
+          message,
+        }),
       });
 
-      if (response.ok) {
+      const result = await response.json().catch(() => ({}));
+
+      if (response.ok && result.success) {
         setStatus("success");
-        form.current.reset();
+        el.reset();
       } else {
         setStatus("error");
       }
@@ -91,11 +113,27 @@ function Contact() {
           >
             {status === "sending" ? "Sending..." : "Send Message"}
           </button>
-          {status && (
-            <div className={`status-message ${status}`}>
-              {status === "success" && "Message sent successfully!"}
-              {status === "error" &&
-                "Failed to send message. Please try again."}
+          {status === "success" && (
+            <div className="status-message success">Message sent successfully!</div>
+          )}
+          {status === "error" && (
+            <div className="status-message error">
+              Failed to send message. Please try again.
+            </div>
+          )}
+          {status === "noconfig" && (
+            <div className="status-message error">
+              Contact form needs{" "}
+              <code style={{ fontSize: "0.9em" }}>VITE_WEB3FORMS_ACCESS_KEY</code>{" "}
+              in <code style={{ fontSize: "0.9em" }}>.env</code>. Free key:{" "}
+              <a
+                href="https://web3forms.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                web3forms.com
+              </a>
+              .
             </div>
           )}
         </form>
