@@ -167,16 +167,16 @@ function ProjectCard({ project }) {
       {(project.description || project.demoLogin) && (
         <div className="project-card-overlay">
           {project.description && <p>{project.description}</p>}
-            {project.demoLogin && project.demoLogin.length > 0 && (
-              <div className="project-card-demo-login">
-                <span>Demo login:</span>
-                {project.demoLogin.map((item) => (
-                  <span key={item.role}>
-                    {item.role}: {item.user} / {item.pass}
-                  </span>
-                ))}
-              </div>
-            )}
+          {project.demoLogin && project.demoLogin.length > 0 && (
+            <div className="project-card-demo-login">
+              <span>Demo login:</span>
+              {project.demoLogin.map((item) => (
+                <span key={item.role}>
+                  {item.role}: {item.user} / {item.pass}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -201,35 +201,16 @@ ProjectCard.propTypes = {
       })
     ),
   }).isRequired,
-  isMobile: PropTypes.bool.isRequired,
 };
 
 function Projects() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => {
-      window.removeEventListener("resize", checkMobile);
-    };
-  }, []);
-
   return (
     <section className="projects" id="projects">
       <div className="projects-content">
         <h2>Projects</h2>
         <div className="projects-grid">
           {projectsData.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              isMobile={isMobile}
-            />
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </div>

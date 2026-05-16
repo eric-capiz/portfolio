@@ -61,30 +61,6 @@
   }
 }
 
-.resume-link {
-  background: rgba(157, 85, 255, 0.1);
-  border: 1px solid rgba(157, 85, 255, 0.3);
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0.5rem 1rem;
-  font-family: inherit;
-  border-radius: 100px;
-
-  &:hover {
-    background: rgba(157, 85, 255, 0.2);
-    border-color: #9d55ff;
-    color: #fff;
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0px);
-  }
-}
-
 // Desktop styles
 @media (min-width: 768px) {
   .nav {

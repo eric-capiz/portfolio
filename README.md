@@ -1,6 +1,6 @@
 # Portfolio Website
 
-A modern, interactive portfolio website built with React, Three.js, and Vite, showcasing my projects and skills as a Full Stack Developer.
+A modern, interactive portfolio website built with React and Vite, showcasing my projects and skills as a Full Stack Developer.
 
 ## 🚀 My Portfolio
 
