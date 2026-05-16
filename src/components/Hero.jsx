@@ -1,20 +1,30 @@
 import { useCallback, useEffect, useRef } from "react";
 import gsap from "gsap";
+import { scrollToId } from "../utils/scrollToSection";
 
 const tickerItems = [
   "React",
   "TypeScript",
+  "JavaScript",
   "Next.js",
+  "Node.js",
+  "MongoDB",
+  "Express",
   "Storybook",
   "Tailwind",
+  "SCSS",
+  "Redux",
   "AEM",
+  "Git",
+  "Figma",
+  "Jira",
   "Agile",
   "Responsive UI",
 ];
 
 const deckCards = [
   { label: "Focus", value: "React SPAs" },
-  { label: "UI", value: "Mobile-first web" },
+  { label: "UI", value: "Mobile first web" },
   { label: "Workflow", value: "AI assisted dev" },
 ];
 
@@ -22,9 +32,7 @@ function Hero() {
   const heroRef = useRef(null);
 
   const handleScroll = useCallback(() => {
-    const projectsSection = document.getElementById("projects");
-    if (!projectsSection) return;
-    projectsSection.scrollIntoView({ behavior: "smooth" });
+    scrollToId("projects");
   }, []);
 
   useEffect(() => {
@@ -67,8 +75,8 @@ function Hero() {
           </h1>
 
           <p className="hero__lede">
-            I design and build React interfaces — from enterprise SPAs and component
-            work to freelance sites and full-stack demos.
+            I design and build React interfaces, from enterprise SPAs and component
+            work to freelance sites and full stack demos.
           </p>
 
           <div className="hero__actions">
@@ -93,9 +101,13 @@ function Hero() {
       </div>
 
       <div className="hero__ticker" aria-hidden="true">
-        <div className="hero__ticker-track">
-          {[...tickerItems, ...tickerItems].map((item, index) => (
-            <span key={`${item}-${index}`}>{item}</span>
+        <div className="hero__ticker-marquee">
+          {[0, 1].map((copy) => (
+            <div key={copy} className="hero__ticker-track">
+              {tickerItems.map((item) => (
+                <span key={`${copy}-${item}`}>{item}</span>
+              ))}
+            </div>
           ))}
         </div>
       </div>

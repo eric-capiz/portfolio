@@ -66,13 +66,7 @@
     }
 
     &__stats {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr;
     }
-  }
-}
-
-@media (max-width: 520px) {
-  .about__stats {
-    grid-template-columns: 1fr;
   }
 }

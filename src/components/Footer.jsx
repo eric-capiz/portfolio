@@ -1,4 +1,5 @@
 import { FaGithub, FaLinkedin, FaEnvelope, FaArrowUp } from "react-icons/fa";
+import { scrollToId, scrollToTop } from "../utils/scrollToSection";
 
 const footerLinks = [
   { label: "About", href: "#about" },
@@ -12,24 +13,12 @@ function Footer() {
 
   const handleNavClick = (e) => {
     e.preventDefault();
-    const targetId = e.currentTarget.getAttribute("href").slice(1);
-    const element = document.getElementById(targetId);
-
-    if (element) {
-      const offset = window.innerWidth < 900 ? 88 : 32;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
+    scrollToId(e.currentTarget.getAttribute("href").slice(1));
   };
 
-  const scrollToTop = (e) => {
+  const handleScrollToTop = (e) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToTop();
   };
 
   return (
@@ -37,7 +26,7 @@ function Footer() {
       <div className="site-footer__beam" aria-hidden="true" />
       <div className="section-shell site-footer__grid">
         <div className="site-footer__brand">
-          <a href="#top" onClick={scrollToTop} className="site-footer__mark">
+          <a href="#top" onClick={handleScrollToTop} className="site-footer__mark">
             EC
           </a>
           <div>
@@ -79,7 +68,7 @@ function Footer() {
 
       <div className="section-shell site-footer__bar">
         <p>© {currentYear} Eric Capiz. All rights reserved.</p>
-        <a href="#top" onClick={scrollToTop} className="site-footer__top">
+        <a href="#top" onClick={handleScrollToTop} className="site-footer__top">
           Top <FaArrowUp size={12} />
         </a>
       </div>

@@ -1,7 +1,9 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Analytics from "../services/analytics";
+import { scrollToId } from "../utils/scrollToSection";
+import { setBodyScrollLock, trapFocus } from "../utils/overlay";
 
 const navItems = [
   { label: "Home", href: "#top", short: "HM" },
@@ -28,9 +30,35 @@ function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("top");
+  const commandRef = useRef(null);
+  const menuSheetRef = useRef(null);
+
+  useEffect(() => {
+    setBodyScrollLock(isMenuOpen || isCommandOpen);
+    return () => setBodyScrollLock(false);
+  }, [isMenuOpen, isCommandOpen]);
+
+  useEffect(() => {
+    if (isCommandOpen) {
+      commandRef.current?.querySelector("button")?.focus();
+    }
+  }, [isCommandOpen]);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      menuSheetRef.current?.querySelector("a")?.focus();
+    }
+  }, [isMenuOpen]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      if (isCommandOpen && commandRef.current) {
+        trapFocus(commandRef.current, event);
+      }
+      if (isMenuOpen && menuSheetRef.current) {
+        trapFocus(menuSheetRef.current, event);
+      }
+
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
         setIsCommandOpen((open) => !open);
@@ -44,15 +72,26 @@ function Nav() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [isCommandOpen, isMenuOpen]);
 
   useEffect(() => {
     const sections = navItems
       .map((item) => document.getElementById(item.href.slice(1)))
       .filter(Boolean);
 
+    const setActiveFromScroll = () => {
+      if (window.scrollY < 120) {
+        setActiveSection("top");
+      }
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
+        if (window.scrollY < 120) {
+          setActiveSection("top");
+          return;
+        }
+
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -65,30 +104,31 @@ function Nav() {
     );
 
     sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+    window.addEventListener("scroll", setActiveFromScroll, { passive: true });
+    setActiveFromScroll();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", setActiveFromScroll);
+    };
   }, []);
+
+  const closeOverlays = () => {
+    setIsMenuOpen(false);
+    setIsCommandOpen(false);
+  };
 
   const handleNavClick = (e) => {
     e.preventDefault();
-    setIsMenuOpen(false);
-    setIsCommandOpen(false);
-
-    const targetId = e.currentTarget.getAttribute("href").slice(1);
-    const element = document.getElementById(targetId);
-
-    if (element) {
-      const offset = window.innerWidth < 900 ? 88 : 32;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
+    closeOverlays();
+    scrollToId(e.currentTarget.getAttribute("href").slice(1));
   };
 
-  const handleSocialClick = (item) => {
+  const handleSocialClick = (item, closePalette = false) => {
+    if (closePalette) {
+      closeOverlays();
+    }
+
     Analytics.trackAction({
       type: "link",
       element: "icon",
@@ -116,9 +156,9 @@ function Nav() {
                 className={isActive ? "is-active" : ""}
                 onClick={handleNavClick}
                 title={item.label}
+                aria-label={item.label}
               >
                 <span className="nav-rail__short">{item.short}</span>
-                <span className="nav-rail__label">{item.label}</span>
               </a>
             );
           })}
@@ -150,6 +190,14 @@ function Nav() {
       </nav>
 
       <header className="nav-mobile" aria-label="Mobile navigation">
+        {isMenuOpen && (
+          <button
+            type="button"
+            className="nav-mobile__backdrop"
+            aria-label="Close menu"
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
         <a href="#top" className="nav-mobile__brand" onClick={handleNavClick}>
           Eric Capiz
         </a>
@@ -162,7 +210,11 @@ function Nav() {
         >
           {isMenuOpen ? <RiCloseLine size={22} /> : <RiMenu3Line size={22} />}
         </button>
-        <div className={`nav-mobile__sheet ${isMenuOpen ? "is-open" : ""}`}>
+        <div
+          ref={menuSheetRef}
+          className={`nav-mobile__sheet ${isMenuOpen ? "is-open" : ""}`}
+          role="menu"
+        >
           {navItems.map((item) => (
             <a key={item.href} href={item.href} onClick={handleNavClick}>
               {item.label}
@@ -181,6 +233,7 @@ function Nav() {
           onMouseDown={() => setIsCommandOpen(false)}
         >
           <div
+            ref={commandRef}
             className="command-panel shine-border"
             role="dialog"
             aria-modal="true"
@@ -206,7 +259,7 @@ function Nav() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => handleSocialClick(item)}
+                  onClick={() => handleSocialClick(item, true)}
                 >
                   <span>{item.label}</span>
                   <small>external</small>

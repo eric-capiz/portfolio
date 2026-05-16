@@ -43,6 +43,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5.5rem;
+  overflow-x: clip;
 }
 
 body {
@@ -52,6 +53,7 @@ body {
   font-family: var(--font-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 button,
@@ -81,7 +83,6 @@ a {
   min-height: 100vh;
 }
 
-/* Ambient layers */
 .aurora {
   position: fixed;
   border-radius: 50%;
@@ -139,7 +140,6 @@ a {
   );
 }
 
-/* Shared layout */
 .section-shell {
   width: min(calc(100% - 2.5rem), var(--max-width));
   margin-inline: auto;
@@ -196,7 +196,6 @@ a {
   line-height: 1.75;
 }
 
-/* Shine border — React Bits–style animated edge */
 .shine-border {
   position: relative;
   border-radius: var(--radius-lg);
@@ -237,7 +236,6 @@ a {
   }
 }
 
-/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -300,10 +298,21 @@ a {
   }
 
   html {
-    scroll-padding-top: 4.75rem;
+    scroll-padding-top: calc(4.75rem + env(safe-area-inset-top, 0px));
   }
 
   .app-main {
     margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine-border::before,
+  .hero__ticker-marquee {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 }

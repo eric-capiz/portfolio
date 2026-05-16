@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 const highlights = [
   { value: "5+", label: "Years in frontend" },
   { value: "React", label: "SPAs & UI systems" },
-  { value: "Web", label: "Mobile-first layouts" },
+  { value: "Web", label: "Mobile first layouts" },
 ];
 
 function About() {
@@ -93,10 +93,10 @@ function About() {
             <p ref={(el) => (paragraphRefs.current[0] = el)}>
               Frontend developer focused on React, TypeScript, and modern CSS. Experience
               spans enterprise SPAs, component libraries, and layouts that work across
-              screen sizes — with attention to structure, performance, and maintainable code.
+              screen sizes, with attention to structure, performance, and maintainable code.
             </p>
             <p ref={(el) => (paragraphRefs.current[1] = el)}>
-              Recent work includes marketing sites, booking flows, and full-stack web apps
+              Recent work includes marketing sites, booking flows, and full stack web apps
               with Node and MongoDB. Comfortable in agile teams and documenting UI in
               Storybook when projects call for it.
             </p>

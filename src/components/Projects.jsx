@@ -14,7 +14,7 @@ const projectsData = [
     id: 7,
     name: "LeadReach",
     description:
-      "Next.js app for solo outreach: search Google Places by category or business name, pull leads into MongoDB, enrich with optional social hints, and draft outreach using reusable merge-field templates.",
+      "Next.js app for solo outreach: search Google Places by category or business name, pull leads into MongoDB, enrich with optional social hints, and draft outreach using reusable merge field templates.",
     demoLogin: [{ role: "Demo", user: "demo", pass: "demo" }],
     mainImage: leadImg,
     techStack: ["React", "Next.js", "MongoDB"],
@@ -25,7 +25,7 @@ const projectsData = [
     id: 1,
     name: "Chop Shop",
     description:
-      "Multi-barber booking app. Users book appointments and leave reviews; admins manage barbers, services, gallery, and availability.",
+      "Multi barber booking app. Users book appointments and leave reviews; admins manage barbers, services, gallery, and availability.",
     demoLogin: [
       { role: "Admin", user: "admin0", pass: "admin0" },
       { role: "User", user: "breezy", pass: "breezy" },
@@ -130,7 +130,7 @@ function ProjectCard({ project, index }) {
     Analytics.trackAction({
       type: "link",
       element: "text",
-      text: `${project.name} - Live Site`,
+      text: `${project.name}: Live Site`,
       url: project.liveLink,
     });
     window.open(project.liveLink, "_blank");
@@ -140,7 +140,7 @@ function ProjectCard({ project, index }) {
     Analytics.trackAction({
       type: "link",
       element: "text",
-      text: `${project.name} - View Code`,
+      text: `${project.name}: View Code`,
       url: project?.codeLink,
     });
     window.open(project?.codeLink, "_blank");
@@ -211,7 +211,7 @@ function ProjectCard({ project, index }) {
           >
             {project.demoLogin.map((item) => (
               <p key={item.role}>
-                <strong>{item.role}</strong> — {item.user} / {item.pass}
+                <strong>{item.role}</strong>: {item.user} / {item.pass}
               </p>
             ))}
           </div>

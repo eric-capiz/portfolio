@@ -70,14 +70,6 @@
     letter-spacing: 0.06em;
   }
 
-  &__label {
-    font-size: 0.58rem;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.2s ease;
-  }
-
   &__footer {
     display: flex;
     flex-direction: column;
@@ -194,6 +186,12 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .nav-mobile__sheet {
+    transition: none;
+  }
+}
+
 @media (max-width: 899px) {
   .nav-rail {
     display: none;
@@ -208,12 +206,28 @@
     left: 0;
     right: 0;
     z-index: 30;
-    padding: 0.75rem 1rem;
+    padding:
+      max(0.75rem, env(safe-area-inset-top, 0px))
+      max(1rem, env(safe-area-inset-right, 0px))
+      0.75rem
+      max(1rem, env(safe-area-inset-left, 0px));
     border-bottom: 1px solid var(--line);
     background: rgba(6, 8, 15, 0.92);
     backdrop-filter: blur(16px);
 
+    &__backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 29;
+      border: 0;
+      padding: 0;
+      background: rgba(2, 4, 10, 0.55);
+      cursor: pointer;
+    }
+
     &__brand {
+      position: relative;
+      z-index: 32;
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 0.95rem;
@@ -221,10 +235,14 @@
     }
 
     &__toggle {
+      position: relative;
+      z-index: 32;
       display: grid;
       place-items: center;
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 2.75rem;
+      height: 2.75rem;
+      min-width: 2.75rem;
+      min-height: 2.75rem;
       border: 1px solid var(--line);
       border-radius: var(--radius-sm);
       background: var(--bg-elevated);
@@ -234,6 +252,7 @@
 
     &__sheet {
       position: absolute;
+      z-index: 31;
       top: calc(100% + 0.5rem);
       left: 1rem;
       right: 1rem;

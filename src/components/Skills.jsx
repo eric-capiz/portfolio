@@ -36,7 +36,7 @@ const skillGroups = [
       { label: "HTML / CSS", icon: SiHtml5 },
       { label: "Tailwind", icon: SiTailwindcss },
       { label: "SCSS", icon: SiSass },
-      { label: "Mobile-first layouts", icon: SiHtml5 },
+      { label: "Mobile first layouts", icon: SiHtml5 },
     ],
   },
   {
@@ -97,7 +97,7 @@ function Skills() {
           <h2>Technical skills</h2>
           <p className="section-lede">
             Tools and practices I use for enterprise React work, freelance builds, and
-            day-to-day delivery.
+            day to day delivery.
           </p>
         </header>
 

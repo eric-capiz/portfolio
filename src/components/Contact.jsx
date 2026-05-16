@@ -125,7 +125,7 @@ function Contact() {
             <h2>Let&apos;s build something</h2>
             <p className="section-lede">
               Open to frontend roles, contract work, and collaborations. Send a message or
-              reach out directly — I&apos;ll get back to you.
+              reach out directly. I&apos;ll get back to you.
             </p>
           </header>
 

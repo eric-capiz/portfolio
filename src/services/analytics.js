@@ -87,7 +87,6 @@ class Analytics {
     const referrerUrl = new URL(referrer);
     const hostname = referrerUrl.hostname;
 
-    // Check for social media
     if (hostname.includes("facebook.com") || hostname.includes("fb.com")) {
       return {
         type: "social",
@@ -180,21 +179,22 @@ class Analytics {
       this.sessionId = data.sessionId;
       this.startScrollTracking();
     } catch {
-      // Silently fail
+      return;
     }
   }
 
   startScrollTracking() {
     this.stopScrollTracking();
 
-    // Track section visibility
     const sections = ["about", "projects", "skills", "contact"];
     this.scrollObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const section = entry.target.id;
           if (entry.isIntersecting) {
-            const section = entry.target.id;
             this.sectionStartTimes[section] = Date.now();
+          } else {
+            delete this.sectionStartTimes[section];
           }
         });
       },
@@ -206,7 +206,6 @@ class Analytics {
       if (element) this.scrollObserver.observe(element);
     });
 
-    // Track scroll depth
     this.scrollHandler = this.throttle(() => {
       this.updateScrollTracking();
     }, 1000);
@@ -263,7 +262,6 @@ class Analytics {
       const sectionTop = rect.top;
       const sectionBottom = rect.bottom;
 
-      // Calculate scroll depth percentage
       let scrollDepth = 0;
       if (sectionTop < windowHeight && sectionBottom > 0) {
         const visibleHeight =
@@ -271,7 +269,6 @@ class Analytics {
         scrollDepth = (visibleHeight / sectionHeight) * 100;
       }
 
-      // Calculate time spent
       const timeSpent = this.sectionStartTimes[section]
         ? now - this.sectionStartTimes[section]
         : 0;
@@ -295,7 +292,7 @@ class Analytics {
           body: JSON.stringify(scrollData),
         });
       } catch {
-        // Silently fail
+        return;
       }
     }
 
@@ -314,7 +311,7 @@ class Analytics {
         body: JSON.stringify(action),
       });
     } catch {
-      // Silently fail
+      return;
     }
   }
 }

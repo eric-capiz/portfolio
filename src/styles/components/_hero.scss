@@ -126,11 +126,18 @@
     mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
   }
 
-  &__ticker-track {
+  &__ticker-marquee {
     display: flex;
     width: max-content;
+    animation: ticker-scroll 55s linear infinite;
+  }
+
+  &__ticker-track {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
     gap: 2.5rem;
-    animation: ticker-scroll 28s linear infinite;
+    padding-right: 2.5rem;
 
     span {
       font-family: var(--font-mono);
@@ -161,7 +168,7 @@
     }
 
     &__deck {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr;
     }
 
     &__card strong {
@@ -175,11 +182,5 @@
         width: 100%;
       }
     }
-  }
-}
-
-@media (max-width: 520px) {
-  .hero__deck {
-    grid-template-columns: 1fr;
   }
 }
