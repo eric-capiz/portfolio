@@ -10,7 +10,7 @@ function Nav() {
     e.preventDefault();
     setIsMenuOpen(false);
 
-    const targetId = e.target.getAttribute("href").slice(1);
+    const targetId = e.currentTarget.getAttribute("href").slice(1);
     const element = document.getElementById(targetId);
 
     if (element) {

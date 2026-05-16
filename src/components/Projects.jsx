@@ -101,6 +101,8 @@ const projectsData = [
 function ProjectCard({ project }) {
   const videoRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const hasDetails = Boolean(project.description || project.demoLogin);
 
   useEffect(() => {
     if (!project.videoSrc || !videoRef.current) return;
@@ -164,8 +166,21 @@ function ProjectCard({ project }) {
       <p>{project.techStack.join(" • ")}</p>
       <button onClick={handleLiveSiteClick}>Live Site</button>
       {project.codeLink && <button onClick={handleCodeClick}>View Code</button>}
-      {(project.description || project.demoLogin) && (
-        <div className="project-card-overlay">
+      {hasDetails && (
+        <button
+          type="button"
+          className="details-toggle"
+          aria-expanded={isDetailsOpen}
+          onClick={() => setIsDetailsOpen((open) => !open)}
+        >
+          Details
+        </button>
+      )}
+      {hasDetails && (
+        <div
+          className={`project-card-overlay ${isDetailsOpen ? "open" : ""}`}
+          aria-hidden={!isDetailsOpen}
+        >
           {project.description && <p>{project.description}</p>}
           {project.demoLogin && project.demoLogin.length > 0 && (
             <div className="project-card-demo-login">

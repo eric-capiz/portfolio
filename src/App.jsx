@@ -6,16 +6,13 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Analytics from "./services/analytics";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 function App() {
-  const sessionStarted = useRef(false);
-
   useEffect(() => {
-    if (!sessionStarted.current) {
-      Analytics.startSession();
-      sessionStarted.current = true;
-    }
+    Analytics.startSession();
+
+    return () => Analytics.stopSession();
   }, []);
 
   return (

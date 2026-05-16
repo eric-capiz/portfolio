@@ -3,6 +3,8 @@ import { useCallback } from "react";
 function Hero() {
   const handleScroll = useCallback(() => {
     const projectsSection = document.getElementById("projects");
+    if (!projectsSection) return;
+
     projectsSection.scrollIntoView({ behavior: "smooth" });
   }, []);
 

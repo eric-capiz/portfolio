@@ -103,7 +103,9 @@
         }
       }
 
-      .project-card-media-wrap:hover ~ .project-card-overlay {
+      .project-card-media-wrap:hover ~ .project-card-overlay,
+      &:focus-within .project-card-overlay,
+      .project-card-overlay.open {
         opacity: 1;
       }
 
@@ -137,6 +139,11 @@
           background-color: #9d55ff;
           transform: translateY(-2px);
         }
+      }
+
+      .details-toggle {
+        position: relative;
+        z-index: 2;
       }
 
       &:hover {

@@ -7,6 +7,10 @@ class Analytics {
     this.lastScrollUpdate = Date.now();
     this.scrollUpdateInterval = 5000;
     this.location = null;
+    this.scrollObserver = null;
+    this.scrollHandler = null;
+    this.sessionToken = null;
+    this.isSessionActive = false;
   }
 
   getDeviceType() {
@@ -24,15 +28,18 @@ class Analytics {
     if (ua.includes("Firefox/")) {
       browser = "Firefox";
       version = ua.match(/Firefox\/([0-9.]+)/)[1];
+    } else if (ua.includes("Edg/")) {
+      browser = "Edge";
+      version = ua.match(/Edg\/([0-9.]+)/)[1];
+    } else if (ua.includes("Edge/")) {
+      browser = "Edge";
+      version = ua.match(/Edge\/([0-9.]+)/)[1];
     } else if (ua.includes("Chrome/")) {
       browser = "Chrome";
       version = ua.match(/Chrome\/([0-9.]+)/)[1];
     } else if (ua.includes("Safari/") && !ua.includes("Chrome/")) {
       browser = "Safari";
       version = ua.match(/Version\/([0-9.]+)/)?.[1] || "Unknown";
-    } else if (ua.includes("Edge/")) {
-      browser = "Edge";
-      version = ua.match(/Edge\/([0-9.]+)/)[1];
     }
 
     return { browser, version };
@@ -135,6 +142,12 @@ class Analytics {
   }
 
   async startSession() {
+    if (this.isSessionActive) return;
+
+    const sessionToken = {};
+    this.sessionToken = sessionToken;
+    this.isSessionActive = true;
+
     try {
       const deviceInfo = {
         type: this.getDeviceType(),
@@ -162,6 +175,8 @@ class Analytics {
       if (!response.ok) return;
 
       const data = await response.json();
+      if (!this.isSessionActive || this.sessionToken !== sessionToken) return;
+
       this.sessionId = data.sessionId;
       this.startScrollTracking();
     } catch {
@@ -170,9 +185,11 @@ class Analytics {
   }
 
   startScrollTracking() {
+    this.stopScrollTracking();
+
     // Track section visibility
     const sections = ["about", "projects", "skills", "contact"];
-    const observer = new IntersectionObserver(
+    this.scrollObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -186,16 +203,34 @@ class Analytics {
 
     sections.forEach((section) => {
       const element = document.getElementById(section);
-      if (element) observer.observe(element);
+      if (element) this.scrollObserver.observe(element);
     });
 
     // Track scroll depth
-    window.addEventListener(
-      "scroll",
-      this.throttle(() => {
-        this.updateScrollTracking();
-      }, 1000)
-    );
+    this.scrollHandler = this.throttle(() => {
+      this.updateScrollTracking();
+    }, 1000);
+    window.addEventListener("scroll", this.scrollHandler);
+  }
+
+  stopScrollTracking() {
+    if (this.scrollObserver) {
+      this.scrollObserver.disconnect();
+      this.scrollObserver = null;
+    }
+
+    if (this.scrollHandler) {
+      window.removeEventListener("scroll", this.scrollHandler);
+      this.scrollHandler = null;
+    }
+  }
+
+  stopSession() {
+    this.isSessionActive = false;
+    this.sessionToken = null;
+    this.sessionId = null;
+    this.sectionStartTimes = {};
+    this.stopScrollTracking();
   }
 
   throttle(func, limit) {

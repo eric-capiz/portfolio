@@ -63,6 +63,42 @@ function Contact() {
     }
   };
 
+  const renderStatusMessage = () => {
+    if (status === "success") {
+      return (
+        <div className="status-message success">Message sent successfully!</div>
+      );
+    }
+
+    if (status === "error") {
+      return (
+        <div className="status-message error">
+          Failed to send message. Please try again.
+        </div>
+      );
+    }
+
+    if (status === "noconfig") {
+      return (
+        <div className="status-message error">
+          Contact form needs{" "}
+          <code style={{ fontSize: "0.9em" }}>VITE_WEB3FORMS_ACCESS_KEY</code>{" "}
+          in <code style={{ fontSize: "0.9em" }}>.env</code>. Free key:{" "}
+          <a
+            href="https://web3forms.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            web3forms.com
+          </a>
+          .
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <section id="contact" className="contact">
       <div className="contact-content">
@@ -113,29 +149,7 @@ function Contact() {
           >
             {status === "sending" ? "Sending..." : "Send Message"}
           </button>
-          {status === "success" && (
-            <div className="status-message success">Message sent successfully!</div>
-          )}
-          {status === "error" && (
-            <div className="status-message error">
-              Failed to send message. Please try again.
-            </div>
-          )}
-          {status === "noconfig" && (
-            <div className="status-message error">
-              Contact form needs{" "}
-              <code style={{ fontSize: "0.9em" }}>VITE_WEB3FORMS_ACCESS_KEY</code>{" "}
-              in <code style={{ fontSize: "0.9em" }}>.env</code>. Free key:{" "}
-              <a
-                href="https://web3forms.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                web3forms.com
-              </a>
-              .
-            </div>
-          )}
+          {renderStatusMessage()}
         </form>
       </div>
     </section>
