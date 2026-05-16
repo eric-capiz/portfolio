@@ -1,6 +1,28 @@
 import { useRef, useState, useEffect } from "react";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
 const WEB3_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
+
+const channels = [
+  {
+    label: "Email",
+    value: "ericcapiz@gmail.com",
+    href: "mailto:ericcapiz@gmail.com",
+    icon: FaEnvelope,
+  },
+  {
+    label: "GitHub",
+    value: "eric-capiz",
+    href: "https://github.com/eric-capiz",
+    icon: FaGithub,
+  },
+  {
+    label: "LinkedIn",
+    value: "eric-capiz",
+    href: "https://www.linkedin.com/in/eric-capiz",
+    icon: FaLinkedin,
+  },
+];
 
 function Contact() {
   const form = useRef(null);
@@ -66,13 +88,13 @@ function Contact() {
   const renderStatusMessage = () => {
     if (status === "success") {
       return (
-        <div className="status-message success">Message sent successfully!</div>
+        <div className="form-status form-status--success">Message sent successfully!</div>
       );
     }
 
     if (status === "error") {
       return (
-        <div className="status-message error">
+        <div className="form-status form-status--error">
           Failed to send message. Please try again.
         </div>
       );
@@ -80,15 +102,10 @@ function Contact() {
 
     if (status === "noconfig") {
       return (
-        <div className="status-message error">
+        <div className="form-status form-status--error">
           Contact form needs{" "}
-          <code style={{ fontSize: "0.9em" }}>VITE_WEB3FORMS_ACCESS_KEY</code>{" "}
-          in <code style={{ fontSize: "0.9em" }}>.env</code>. Free key:{" "}
-          <a
-            href="https://web3forms.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <code>VITE_WEB3FORMS_ACCESS_KEY</code> in <code>.env</code>. Free key:{" "}
+          <a href="https://web3forms.com/" target="_blank" rel="noopener noreferrer">
             web3forms.com
           </a>
           .
@@ -101,15 +118,42 @@ function Contact() {
 
   return (
     <section id="contact" className="contact">
-      <div className="contact-content">
-        <h2>Get In Touch</h2>
+      <div className="section-shell contact__layout">
+        <aside className="contact__aside">
+          <header className="section-head">
+            <p className="section-kicker">04 · Contact</p>
+            <h2>Let&apos;s build something</h2>
+            <p className="section-lede">
+              Open to frontend roles, contract work, and collaborations. Send a message or
+              reach out directly — I&apos;ll get back to you.
+            </p>
+          </header>
+
+          <ul className="contact__channels">
+            {channels.map((channel) => {
+              const Icon = channel.icon;
+              return (
+                <li key={channel.label}>
+                  <a href={channel.href} target={channel.href.startsWith("http") ? "_blank" : undefined} rel={channel.href.startsWith("http") ? "noopener noreferrer" : undefined}>
+                    <Icon aria-hidden="true" />
+                    <span>
+                      <small>{channel.label}</small>
+                      {channel.value}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </aside>
+
         <form
           ref={form}
           onSubmit={handleSubmit}
-          className="contact-form"
+          className="contact__form shine-border"
           autoComplete="off"
         >
-          <div className="form-group">
+          <div className="form-field">
             <label htmlFor="name">Name</label>
             <input
               type="text"
@@ -120,34 +164,34 @@ function Contact() {
               autoComplete="off"
             />
           </div>
-          <div className="form-group">
+          <div className="form-field">
             <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
               name="email"
               required
-              placeholder="Your email"
+              placeholder="you@email.com"
               autoComplete="off"
             />
           </div>
-          <div className="form-group">
+          <div className="form-field">
             <label htmlFor="message">Message</label>
             <textarea
               id="message"
               name="message"
               required
               rows="5"
-              placeholder="Your message"
+              placeholder="Tell me about your project..."
               autoComplete="off"
             />
           </div>
           <button
             type="submit"
-            className="submit-btn"
+            className="btn btn--primary btn--full"
             disabled={status === "sending"}
           >
-            {status === "sending" ? "Sending..." : "Send Message"}
+            {status === "sending" ? "Sending..." : "Send message"}
           </button>
           {renderStatusMessage()}
         </form>

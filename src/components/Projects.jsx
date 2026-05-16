@@ -98,11 +98,12 @@ const projectsData = [
   },
 ];
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, index }) {
   const videoRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const hasDetails = Boolean(project.description || project.demoLogin);
+  const hasDemoLogin = project.demoLogin?.length > 0;
+  const isReversed = index % 2 === 1;
 
   useEffect(() => {
     if (!project.videoSrc || !videoRef.current) return;
@@ -146,8 +147,14 @@ function ProjectCard({ project }) {
   };
 
   return (
-    <div className="project-card">
-      <div className="project-card-media-wrap">
+    <article
+      className={`project-entry shine-border ${isReversed ? "project-entry--reverse" : ""}`}
+    >
+      <div className="project-entry__index" aria-hidden="true">
+        {String(index + 1).padStart(2, "0")}
+      </div>
+
+      <div className="project-entry__preview">
         {project.videoSrc ? (
           <video
             ref={videoRef}
@@ -156,49 +163,66 @@ function ProjectCard({ project }) {
             muted
             loop
             playsInline
-            className="project-card-media"
           />
         ) : (
           <img src={project.mainImage} alt={project.name} />
         )}
+        <div className="project-entry__preview-shade" aria-hidden="true" />
+        {project.videoSrc && (
+          <span className="project-entry__preview-badge">Demo clip</span>
+        )}
       </div>
-      <h3>{project.name}</h3>
-      <p>{project.techStack.join(" • ")}</p>
-      <button onClick={handleLiveSiteClick}>Live Site</button>
-      {project.codeLink && <button onClick={handleCodeClick}>View Code</button>}
-      {hasDetails && (
-        <button
-          type="button"
-          className="details-toggle"
-          aria-expanded={isDetailsOpen}
-          onClick={() => setIsDetailsOpen((open) => !open)}
-        >
-          Details
-        </button>
-      )}
-      {hasDetails && (
-        <div
-          className={`project-card-overlay ${isDetailsOpen ? "open" : ""}`}
-          aria-hidden={!isDetailsOpen}
-        >
-          {project.description && <p>{project.description}</p>}
-          {project.demoLogin && project.demoLogin.length > 0 && (
-            <div className="project-card-demo-login">
-              <span>Demo login:</span>
-              {project.demoLogin.map((item) => (
-                <span key={item.role}>
-                  {item.role}: {item.user} / {item.pass}
-                </span>
-              ))}
-            </div>
+
+      <div className="project-entry__panel">
+        <div className="project-entry__tags">
+          {project.techStack.map((tech) => (
+            <span key={tech}>{tech}</span>
+          ))}
+        </div>
+
+        <h3 className="project-entry__title">{project.name}</h3>
+        <p className="project-entry__desc">{project.description}</p>
+
+        <div className="project-entry__actions">
+          <button type="button" className="btn btn--primary btn--sm" onClick={handleLiveSiteClick}>
+            Live site
+          </button>
+          {project.codeLink && (
+            <button type="button" className="btn btn--ghost btn--sm" onClick={handleCodeClick}>
+              Code
+            </button>
+          )}
+          {hasDemoLogin && (
+            <button
+              type="button"
+              className="btn btn--ghost btn--sm"
+              aria-expanded={isDetailsOpen}
+              onClick={() => setIsDetailsOpen((open) => !open)}
+            >
+              {isDetailsOpen ? "Hide login" : "Demo login"}
+            </button>
           )}
         </div>
-      )}
-    </div>
+
+        {hasDemoLogin && (
+          <div
+            className={`project-entry__demo ${isDetailsOpen ? "is-open" : ""}`}
+            aria-hidden={!isDetailsOpen}
+          >
+            {project.demoLogin.map((item) => (
+              <p key={item.role}>
+                <strong>{item.role}</strong> — {item.user} / {item.pass}
+              </p>
+            ))}
+          </div>
+        )}
+      </div>
+    </article>
   );
 }
 
 ProjectCard.propTypes = {
+  index: PropTypes.number.isRequired,
   project: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -213,7 +237,7 @@ ProjectCard.propTypes = {
         role: PropTypes.string.isRequired,
         user: PropTypes.string.isRequired,
         pass: PropTypes.string.isRequired,
-      })
+      }),
     ),
   }).isRequired,
 };
@@ -221,11 +245,18 @@ ProjectCard.propTypes = {
 function Projects() {
   return (
     <section className="projects" id="projects">
-      <div className="projects-content">
-        <h2>Projects</h2>
-        <div className="projects-grid">
-          {projectsData.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+      <div className="section-shell">
+        <header className="section-head">
+          <p className="section-kicker">02 · Selected work</p>
+          <h2>Selected work</h2>
+          <p className="section-lede">
+            Freelance builds, personal demos, and experiments I&apos;ve worked on.
+          </p>
+        </header>
+
+        <div className="projects-stack">
+          {projectsData.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
       </div>

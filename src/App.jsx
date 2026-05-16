@@ -17,14 +17,22 @@ function App() {
 
   return (
     <div className="app">
-      <div className="grid-overlay"></div>
+      <div className="aurora aurora--one" aria-hidden="true" />
+      <div className="aurora aurora--two" aria-hidden="true" />
+      <div className="aurora aurora--three" aria-hidden="true" />
+      <div className="noise-overlay" aria-hidden="true" />
+      <div className="scanlines" aria-hidden="true" />
+
       <Nav />
-      <Hero />
-      <About />
-      <Projects />
-      <Skills />
-      <Contact />
-      <Footer />
+
+      <main className="app-main">
+        <Hero />
+        <About />
+        <Projects />
+        <Skills />
+        <Contact />
+        <Footer />
+      </main>
     </div>
   );
 }

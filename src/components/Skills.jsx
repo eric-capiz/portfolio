@@ -4,46 +4,86 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   SiJavascript,
   SiReact,
+  SiNextdotjs,
   SiTypescript,
   SiHtml5,
+  SiTailwindcss,
   SiSass,
+  SiRedux,
+  SiStorybook,
+  SiJest,
   SiNodedotjs,
   SiExpress,
   SiMongodb,
-  SiStorybook,
   SiGit,
+  SiFigma,
+  SiJira,
+  SiNpm,
 } from "react-icons/si";
-import { FaCode, FaCube } from "react-icons/fa";
+import { FaCube } from "react-icons/fa";
 import { BsKanban } from "react-icons/bs";
-import { DiCodeBadge } from "react-icons/di";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const skillGroups = [
+  {
+    title: "Frontend",
+    items: [
+      { label: "React (SPA)", icon: SiReact },
+      { label: "Next.js", icon: SiNextdotjs },
+      { label: "TypeScript", icon: SiTypescript },
+      { label: "JavaScript", icon: SiJavascript },
+      { label: "HTML / CSS", icon: SiHtml5 },
+      { label: "Tailwind", icon: SiTailwindcss },
+      { label: "SCSS", icon: SiSass },
+      { label: "Mobile-first layouts", icon: SiHtml5 },
+    ],
+  },
+  {
+    title: "UI, state & quality",
+    items: [
+      { label: "Redux", icon: SiRedux },
+      { label: "Storybook", icon: SiStorybook },
+      { label: "Unit testing & TDD", icon: SiJest },
+    ],
+  },
+  {
+    title: "Backend & CMS",
+    items: [
+      { label: "Node.js", icon: SiNodedotjs },
+      { label: "Express", icon: SiExpress },
+      { label: "MongoDB", icon: SiMongodb },
+      { label: "Adobe Experience Manager", icon: FaCube },
+    ],
+  },
+  {
+    title: "Workflow & practice",
+    items: [
+      { label: "Git", icon: SiGit },
+      { label: "Agile / Scrum", icon: BsKanban },
+      { label: "Figma", icon: SiFigma },
+      { label: "Jira", icon: SiJira },
+      { label: "NPM", icon: SiNpm },
+    ],
+  },
+];
 
 function Skills() {
   const skillsRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".icon-wrapper",
-        {
-          rotate: 0,
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
+      gsap.from(".skills-panel", {
+        y: 40,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: skillsRef.current,
+          start: "top 72%",
         },
-        {
-          rotate: 360,
-          duration: 1,
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: skillsRef.current,
-            start: "top center+=100",
-            toggleActions: "restart restart restart restart",
-          },
-          ease: "power1.out",
-        }
-      );
+      });
     }, skillsRef);
 
     return () => ctx.revert();
@@ -51,108 +91,33 @@ function Skills() {
 
   return (
     <section id="skills" className="skills" ref={skillsRef}>
-      <div className="skills-content">
-        <h2>Technical Skills</h2>
-        <div className="skills-grid">
-          <div className="skill-category">
-            <h3>Frontend</h3>
-            <ul>
-              <li>
-                <span className="icon-wrapper">
-                  <SiJavascript className="skill-icon" />
-                </span>{" "}
-                JavaScript
-              </li>
-              <li>
-                <span className="icon-wrapper">
-                  <SiReact className="skill-icon" />
-                </span>{" "}
-                React
-              </li>
-              <li>
-                <span className="icon-wrapper">
-                  <DiCodeBadge className="skill-icon" />
-                </span>{" "}
-                LitElement
-              </li>
-              <li>
-                <span className="icon-wrapper">
-                  <SiTypescript className="skill-icon" />
-                </span>{" "}
-                TypeScript
-              </li>
-              <li>
-                <span className="icon-wrapper">
-                  <SiHtml5 className="skill-icon" />
-                </span>{" "}
-                HTML5
-              </li>
-              <li>
-                <span className="icon-wrapper">
-                  <SiSass className="skill-icon" />
-                </span>{" "}
-                SCSS
-              </li>
-            </ul>
-          </div>
-          <div className="skill-category">
-            <h3>Backend</h3>
-            <ul>
-              <li>
-                <span className="icon-wrapper">
-                  <SiNodedotjs className="skill-icon" />
-                </span>{" "}
-                Node.js
-              </li>
-              <li>
-                <span className="icon-wrapper">
-                  <SiExpress className="skill-icon" />
-                </span>{" "}
-                Express.js
-              </li>
-              <li>
-                <span className="icon-wrapper">
-                  <SiMongodb className="skill-icon" />
-                </span>{" "}
-                MongoDB
-              </li>
-            </ul>
-          </div>
-          <div className="skill-category">
-            <h3>Development Tools & Practices</h3>
-            <ul>
-              <li>
-                <span className="icon-wrapper">
-                  <SiStorybook className="skill-icon" />
-                </span>{" "}
-                Storybook
-              </li>
-              <li>
-                <span className="icon-wrapper">
-                  <SiGit className="skill-icon" />
-                </span>{" "}
-                Git
-              </li>
-              <li>
-                <span className="icon-wrapper flip-icon">
-                  <FaCode className="skill-icon" />
-                </span>{" "}
-                Version Control
-              </li>
-              <li>
-                <span className="icon-wrapper flip-icon">
-                  <FaCube className="skill-icon" />
-                </span>{" "}
-                Adobe Experience Manager
-              </li>
-              <li>
-                <span className="icon-wrapper flip-icon">
-                  <BsKanban className="skill-icon" />
-                </span>{" "}
-                Agile Development
-              </li>
-            </ul>
-          </div>
+      <div className="section-shell">
+        <header className="section-head section-head--center">
+          <p className="section-kicker">03 · Capabilities</p>
+          <h2>Technical skills</h2>
+          <p className="section-lede">
+            Tools and practices I use for enterprise React work, freelance builds, and
+            day-to-day delivery.
+          </p>
+        </header>
+
+        <div className="skills-panels">
+          {skillGroups.map((group) => (
+            <article key={group.title} className="skills-panel shine-border">
+              <h3>{group.title}</h3>
+              <ul>
+                {group.items.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <li key={item.label}>
+                      <Icon aria-hidden="true" />
+                      {item.label}
+                    </li>
+                  );
+                })}
+              </ul>
+            </article>
+          ))}
         </div>
       </div>
     </section>
