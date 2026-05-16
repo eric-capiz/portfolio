@@ -96,7 +96,7 @@ function About() {
               screen sizes, with attention to structure, performance, and maintainable code.
             </p>
             <p ref={(el) => (paragraphRefs.current[1] = el)}>
-              Recent work includes marketing sites, booking flows, and full stack web apps
+              Recent work includes marketing sites, booking flows, and frontend web apps
               with Node and MongoDB. Comfortable in agile teams and documenting UI in
               Storybook when projects call for it.
             </p>

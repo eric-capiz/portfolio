@@ -76,7 +76,7 @@ function Hero() {
 
           <p className="hero__lede">
             I design and build React interfaces, from enterprise SPAs and component
-            work to freelance sites and full stack demos.
+            work to freelance sites and frontend demos.
           </p>
 
           <div className="hero__actions">
