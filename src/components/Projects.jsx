@@ -18,7 +18,6 @@ const projectsData = [
     demoLogin: [{ role: "Demo", user: "demo", pass: "demo" }],
     mainImage: leadImg,
     techStack: ["React", "Next.js", "MongoDB"],
-    codeLink: "https://github.com/eric-capiz/bot",
     liveLink: "https://lead-reach.vercel.app/",
   },
   {
