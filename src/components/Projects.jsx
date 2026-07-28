@@ -8,8 +8,21 @@ import chopShopImg from "../assets/chop-shop.jpg";
 import kumikoImg from "../assets/kumiko.jpg";
 import djImg from "../assets/dj.jpg";
 import leadImg from "../assets/lead.jpg";
+import referraImg from "../assets/referra.jpg";
 
 const projectsData = [
+  {
+    id: 8,
+    name: "Referra",
+    description:
+      "Privacy first referral networking app. Post anonymous referral leads, request a handshake, and unlock identity and chat only after both sides accept. Also includes a private job search on your profile: Standard or AI powered searches across US job boards, resume matching, application tracking, and export for weekly follow up.",
+    demoLogin: [{ role: "Demo", user: "henry@demo.referra", pass: "demo" }],
+    mainImage: referraImg,
+    techStack: ["MERN", "Socket.IO"],
+    codeLink: "https://github.com/eric-capiz/refera",
+    liveLink: "https://referra-iota.vercel.app/",
+    videoSrc: "/demo_clips/referra.mp4",
+  },
   {
     id: 7,
     name: "LeadReach",
