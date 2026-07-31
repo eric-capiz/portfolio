@@ -9,8 +9,21 @@ import kumikoImg from "../assets/kumiko.jpg";
 import djImg from "../assets/dj.jpg";
 import leadImg from "../assets/lead.jpg";
 import referraImg from "../assets/referra.jpg";
+import reziqImg from "../assets/reziq.jpg";
 
 const projectsData = [
+  {
+    id: 9,
+    name: "RezIQ",
+    description:
+      "RezIQ is an AI career assistant that compares your resume to a real job description and explains the fit with evidence, not guesswork. Upload a DOCX, paste the posting, and get a Strong, Possible, or Poor fit read plus honest improvement suggestions you can accept before exporting. It never invents skills or experience you cannot claim.",
+    demoLogin: [{ role: "Demo", user: "demo", pass: "demo11" }],
+    mainImage: reziqImg,
+    techStack: ["React", "Next.js", "MongoDB", "Gemini", "Groq"],
+    codeLink: "https://github.com/eric-capiz/reziq",
+    liveLink: "https://reziq-phi.vercel.app/",
+    videoSrc: "/demo_clips/reziq.mp4",
+  },
   {
     id: 8,
     name: "Referra",
@@ -49,29 +62,6 @@ const projectsData = [
     videoSrc: "/demo_clips/barber.mp4",
   },
   {
-    id: 2,
-    name: "Sweet Dreams Bakery",
-    description:
-      "Bakery showcase site with samples, contact form, and reviews. Admin dashboard for content management.",
-    demoLogin: [{ role: "Admin", user: "demo", pass: "demo" }],
-    mainImage: sweetDreamsBakeryImg,
-    techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
-    codeLink: "https://github.com/eric-capiz/bakery",
-    liveLink: "https://bakery-ec.vercel.app/",
-    videoSrc: "/demo_clips/bakery.mp4",
-  },
-  {
-    id: 3,
-    name: "DJ Cosmic Drift",
-    description:
-      "Cosmic DJ experience with immersive hero, animated turntable, and sections for about, samples, contact, and tour dates.",
-    mainImage: djImg,
-    techStack: ["Next.js", "React", "TypeScript", "Tailwind", "React Bits"],
-    codeLink: "https://github.com/eric-capiz/dj",
-    liveLink: "https://dj-cosmic-drift.vercel.app/",
-    videoSrc: "/demo_clips/dj-demo.mp4",
-  },
-  {
     id: 4,
     name: "Course Correct",
     description:
@@ -97,6 +87,29 @@ const projectsData = [
     codeLink: "https://github.com/eric-capiz/lost-and-found",
     liveLink: "https://lost-and-found-rosy.vercel.app/",
     videoSrc: "/demo_clips/lost.mp4",
+  },
+  {
+    id: 2,
+    name: "Sweet Dreams Bakery",
+    description:
+      "Bakery showcase site with samples, contact form, and reviews. Admin dashboard for content management.",
+    demoLogin: [{ role: "Admin", user: "demo", pass: "demo" }],
+    mainImage: sweetDreamsBakeryImg,
+    techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
+    codeLink: "https://github.com/eric-capiz/bakery",
+    liveLink: "https://bakery-ec.vercel.app/",
+    videoSrc: "/demo_clips/bakery.mp4",
+  },
+  {
+    id: 3,
+    name: "DJ Cosmic Drift",
+    description:
+      "Cosmic DJ experience with immersive hero, animated turntable, and sections for about, samples, contact, and tour dates.",
+    mainImage: djImg,
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind", "React Bits"],
+    codeLink: "https://github.com/eric-capiz/dj",
+    liveLink: "https://dj-cosmic-drift.vercel.app/",
+    videoSrc: "/demo_clips/dj-demo.mp4",
   },
   {
     id: 6,
