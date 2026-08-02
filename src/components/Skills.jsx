@@ -1,6 +1,4 @@
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   SiJavascript,
   SiReact,
@@ -23,9 +21,8 @@ import {
 import { FaCube } from "react-icons/fa";
 import { BsKanban } from "react-icons/bs";
 import { siteCopy } from "../data/siteCopy";
+import { gsap } from "../utils/gsap";
 import { prefersReducedMotion } from "../utils/motion";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const skillIcons = {
   "React (SPA)": SiReact,

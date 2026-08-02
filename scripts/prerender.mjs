@@ -1,7 +1,7 @@
 /**
  * Injects crawlable HTML into dist/index.html after Vite build.
- * React still mounts with createRoot and replaces #root — no hydration,
- * no runtime behavior change. Safe for Vercel (no headless browser).
+ * React still mounts with createRoot and replaces #root. No hydration.
+ * Safe for Vercel (no headless browser).
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -27,7 +27,7 @@ function escapeHtml(value) {
 }
 
 function buildSnapshot() {
-  const { hero, about, skills, contact } = siteCopy;
+  const { hero, about, projects, skills, contact } = siteCopy;
 
   const projectBlocks = projectsData
     .map((project) => {
@@ -73,7 +73,8 @@ function buildSnapshot() {
       </section>
 
       <section id="projects">
-        <h2>Selected work</h2>
+        <h2>${escapeHtml(projects.title)}</h2>
+        <p>${escapeHtml(projects.lede)}</p>
         ${projectBlocks}
       </section>
 

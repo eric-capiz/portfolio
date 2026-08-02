@@ -1,12 +1,16 @@
 import { FaGithub, FaLinkedin, FaEnvelope, FaArrowUp } from "react-icons/fa";
+import logo from "../assets/logo.png";
+import { navItems, socialLinks } from "../data/siteCopy";
+import Analytics from "../services/analytics";
 import { scrollToId, scrollToTop } from "../utils/scrollToSection";
 
-const footerLinks = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "#contact" },
-];
+const footerLinks = navItems.filter((item) => item.href !== "#top");
+
+const footerSocialIcons = {
+  github: FaGithub,
+  linkedin: FaLinkedin,
+  email: FaEnvelope,
+};
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -21,13 +25,27 @@ function Footer() {
     scrollToTop();
   };
 
+  const handleSocialClick = (item) => {
+    Analytics.trackAction({
+      type: "link",
+      element: "icon",
+      text: item.label,
+      url: item.href,
+    });
+  };
+
   return (
     <footer className="site-footer">
       <div className="site-footer__beam" aria-hidden="true" />
       <div className="section-shell site-footer__grid">
         <div className="site-footer__brand">
-          <a href="#top" onClick={handleScrollToTop} className="site-footer__mark">
-            EC
+          <a
+            href="#top"
+            onClick={handleScrollToTop}
+            className="site-footer__mark"
+            aria-label="Back to top"
+          >
+            <img src={logo} alt="" width={40} height={40} />
           </a>
           <div>
             <p>Eric Capiz</p>
@@ -44,25 +62,23 @@ function Footer() {
         </nav>
 
         <div className="site-footer__social">
-          <a
-            href="https://github.com/eric-capiz"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-          >
-            <FaGithub size={17} />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/eric-capiz"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-          >
-            <FaLinkedin size={17} />
-          </a>
-          <a href="mailto:ericcapiz@gmail.com" aria-label="Email">
-            <FaEnvelope size={17} />
-          </a>
+          {socialLinks.map((item) => {
+            const Icon = footerSocialIcons[item.id];
+            const isExternal = item.href.startsWith("http");
+
+            return (
+              <a
+                key={item.id}
+                href={item.href}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                aria-label={item.label}
+                onClick={() => handleSocialClick(item)}
+              >
+                <Icon size={17} />
+              </a>
+            );
+          })}
         </div>
       </div>
 

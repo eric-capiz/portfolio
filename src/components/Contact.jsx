@@ -1,30 +1,15 @@
 import { useRef, useState, useEffect } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
-import { siteCopy } from "../data/siteCopy";
+import { siteCopy, socialLinks } from "../data/siteCopy";
 
 const WEB3_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
 const { contact } = siteCopy;
 
-const channels = [
-  {
-    label: "Email",
-    value: contact.email,
-    href: `mailto:${contact.email}`,
-    icon: FaEnvelope,
-  },
-  {
-    label: "GitHub",
-    value: "eric-capiz",
-    href: contact.github,
-    icon: FaGithub,
-  },
-  {
-    label: "LinkedIn",
-    value: "eric-capiz",
-    href: contact.linkedin,
-    icon: FaLinkedin,
-  },
-];
+const channelIcons = {
+  email: FaEnvelope,
+  github: FaGithub,
+  linkedin: FaLinkedin,
+};
 
 function Contact() {
   const form = useRef(null);
@@ -90,13 +75,15 @@ function Contact() {
   const renderStatusMessage = () => {
     if (status === "success") {
       return (
-        <div className="form-status form-status--success">Message sent successfully!</div>
+        <div className="form-status form-status--success" role="status">
+          Message sent successfully!
+        </div>
       );
     }
 
     if (status === "error") {
       return (
-        <div className="form-status form-status--error">
+        <div className="form-status form-status--error" role="status">
           Failed to send message. Please try again.
         </div>
       );
@@ -104,9 +91,9 @@ function Contact() {
 
     if (status === "noconfig") {
       return (
-        <div className="form-status form-status--error">
-          Contact form needs{" "}
-          <code>VITE_WEB3FORMS_ACCESS_KEY</code> in <code>.env</code>. Free key:{" "}
+        <div className="form-status form-status--error" role="status">
+          Contact form needs <code>VITE_WEB3FORMS_ACCESS_KEY</code> in{" "}
+          <code>.env</code>. Free key:{" "}
           <a href="https://web3forms.com/" target="_blank" rel="noopener noreferrer">
             web3forms.com
           </a>
@@ -129,11 +116,17 @@ function Contact() {
           </header>
 
           <ul className="contact__channels">
-            {channels.map((channel) => {
-              const Icon = channel.icon;
+            {socialLinks.map((channel) => {
+              const Icon = channelIcons[channel.id];
+              const isExternal = channel.href.startsWith("http");
+
               return (
-                <li key={channel.label}>
-                  <a href={channel.href} target={channel.href.startsWith("http") ? "_blank" : undefined} rel={channel.href.startsWith("http") ? "noopener noreferrer" : undefined}>
+                <li key={channel.id}>
+                  <a
+                    href={channel.href}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noopener noreferrer" : undefined}
+                  >
                     <Icon aria-hidden="true" />
                     <span>
                       <small>{channel.label}</small>
@@ -146,12 +139,7 @@ function Contact() {
           </ul>
         </aside>
 
-        <form
-          ref={form}
-          onSubmit={handleSubmit}
-          className="contact__form shine-border"
-          autoComplete="off"
-        >
+        <form ref={form} onSubmit={handleSubmit} className="contact__form shine-border">
           <div className="form-field">
             <label htmlFor="name">Name</label>
             <input
@@ -160,7 +148,7 @@ function Contact() {
               name="name"
               required
               placeholder="Your name"
-              autoComplete="off"
+              autoComplete="name"
             />
           </div>
           <div className="form-field">
@@ -171,7 +159,7 @@ function Contact() {
               name="email"
               required
               placeholder="you@email.com"
-              autoComplete="off"
+              autoComplete="email"
             />
           </div>
           <div className="form-field">

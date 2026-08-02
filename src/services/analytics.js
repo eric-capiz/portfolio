@@ -23,26 +23,26 @@ class Analytics {
   getBrowserInfo() {
     const ua = navigator.userAgent;
     let browser = "Unknown";
-    let version = "Unknown";
+    let browserVersion = "Unknown";
 
     if (ua.includes("Firefox/")) {
       browser = "Firefox";
-      version = ua.match(/Firefox\/([0-9.]+)/)[1];
+      browserVersion = ua.match(/Firefox\/([0-9.]+)/)?.[1] || "Unknown";
     } else if (ua.includes("Edg/")) {
       browser = "Edge";
-      version = ua.match(/Edg\/([0-9.]+)/)[1];
+      browserVersion = ua.match(/Edg\/([0-9.]+)/)?.[1] || "Unknown";
     } else if (ua.includes("Edge/")) {
       browser = "Edge";
-      version = ua.match(/Edge\/([0-9.]+)/)[1];
+      browserVersion = ua.match(/Edge\/([0-9.]+)/)?.[1] || "Unknown";
     } else if (ua.includes("Chrome/")) {
       browser = "Chrome";
-      version = ua.match(/Chrome\/([0-9.]+)/)[1];
+      browserVersion = ua.match(/Chrome\/([0-9.]+)/)?.[1] || "Unknown";
     } else if (ua.includes("Safari/") && !ua.includes("Chrome/")) {
       browser = "Safari";
-      version = ua.match(/Version\/([0-9.]+)/)?.[1] || "Unknown";
+      browserVersion = ua.match(/Version\/([0-9.]+)/)?.[1] || "Unknown";
     }
 
-    return { browser, version };
+    return { browser, browserVersion };
   }
 
   async getLocation() {
@@ -225,6 +225,7 @@ class Analytics {
       this.flushScrollTracking({ beacon: true });
       // bfcache: keep session; full leave: end it
       if (!event.persisted) {
+        this.endSessionOnServer({ beacon: true });
         this.stopSession();
       }
     };
@@ -304,16 +305,46 @@ class Analytics {
     return scrollData;
   }
 
+  sendBeaconOrKeepalive(url, body) {
+    if (typeof navigator.sendBeacon === "function") {
+      const blob = new Blob([body], { type: "application/json" });
+      const queued = navigator.sendBeacon(url, blob);
+      if (queued) return Promise.resolve();
+    }
+
+    return fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+      keepalive: true,
+    }).catch(() => {});
+  }
+
   sendScrollData(scrollData, { beacon = false } = {}) {
     if (!this.sessionId || !scrollData.length) return;
 
     const url = `${this.baseUrl}/session/${this.sessionId}/scroll`;
     const body = JSON.stringify(scrollData);
 
-    if (beacon && typeof navigator.sendBeacon === "function") {
-      const blob = new Blob([body], { type: "application/json" });
-      const queued = navigator.sendBeacon(url, blob);
-      if (queued) return Promise.resolve();
+    if (beacon) {
+      return this.sendBeaconOrKeepalive(url, body);
+    }
+
+    return fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+    }).catch(() => {});
+  }
+
+  endSessionOnServer({ beacon = false } = {}) {
+    if (!this.sessionId) return;
+
+    const url = `${this.baseUrl}/session/${this.sessionId}/end`;
+    const body = "{}";
+
+    if (beacon) {
+      return this.sendBeaconOrKeepalive(url, body);
     }
 
     return fetch(url, {
@@ -349,6 +380,7 @@ class Analytics {
     if (!this.isSessionActive && !this.sessionId) return;
 
     this.flushScrollTracking({ beacon: true });
+    this.endSessionOnServer({ beacon: true });
     this.stopSession();
   }
 

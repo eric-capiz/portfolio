@@ -1,48 +1,29 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import { useEffect, useRef, useState } from "react";
+import logo from "../assets/logo.png";
+import { navItems, socialLinks } from "../data/siteCopy";
 import Analytics from "../services/analytics";
 import { scrollToId } from "../utils/scrollToSection";
 import { setBodyScrollLock, trapFocus } from "../utils/overlay";
 
-const navItems = [
-  { label: "Home", href: "#top", short: "HM" },
-  { label: "About", href: "#about", short: "AB" },
-  { label: "Projects", href: "#projects", short: "PR" },
-  { label: "Skills", href: "#skills", short: "SK" },
-  { label: "Contact", href: "#contact", short: "CT" },
-];
-
-const socialItems = [
-  {
-    label: "GitHub Profile",
-    href: "https://github.com/eric-capiz",
-    icon: <FaGithub size={18} />,
-  },
-  {
-    label: "LinkedIn Profile",
-    href: "https://www.linkedin.com/in/eric-capiz",
-    icon: <FaLinkedin size={18} />,
-  },
-];
+const navSocials = socialLinks
+  .filter((item) => item.id !== "email")
+  .map((item) => ({
+    ...item,
+    label: `${item.label} Profile`,
+    icon: item.id === "github" ? <FaGithub size={18} /> : <FaLinkedin size={18} />,
+  }));
 
 function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCommandOpen, setIsCommandOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("top");
-  const commandRef = useRef(null);
   const menuSheetRef = useRef(null);
 
   useEffect(() => {
-    setBodyScrollLock(isMenuOpen || isCommandOpen);
+    setBodyScrollLock(isMenuOpen);
     return () => setBodyScrollLock(false);
-  }, [isMenuOpen, isCommandOpen]);
-
-  useEffect(() => {
-    if (isCommandOpen) {
-      commandRef.current?.querySelector("button")?.focus();
-    }
-  }, [isCommandOpen]);
+  }, [isMenuOpen]);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -52,27 +33,18 @@ function Nav() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (isCommandOpen && commandRef.current) {
-        trapFocus(commandRef.current, event);
-      }
       if (isMenuOpen && menuSheetRef.current) {
         trapFocus(menuSheetRef.current, event);
       }
 
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-        event.preventDefault();
-        setIsCommandOpen((open) => !open);
-      }
-
       if (event.key === "Escape") {
-        setIsCommandOpen(false);
         setIsMenuOpen(false);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isCommandOpen, isMenuOpen]);
+  }, [isMenuOpen]);
 
   useEffect(() => {
     const sections = navItems
@@ -113,22 +85,13 @@ function Nav() {
     };
   }, []);
 
-  const closeOverlays = () => {
-    setIsMenuOpen(false);
-    setIsCommandOpen(false);
-  };
-
   const handleNavClick = (e) => {
     e.preventDefault();
-    closeOverlays();
+    setIsMenuOpen(false);
     scrollToId(e.currentTarget.getAttribute("href").slice(1));
   };
 
-  const handleSocialClick = (item, closePalette = false) => {
-    if (closePalette) {
-      closeOverlays();
-    }
-
+  const handleSocialClick = (item) => {
     Analytics.trackAction({
       type: "link",
       element: "icon",
@@ -139,9 +102,13 @@ function Nav() {
 
   return (
     <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+
       <nav className="nav-rail" aria-label="Primary navigation">
         <a href="#top" className="nav-rail__brand" onClick={handleNavClick} aria-label="Home">
-          EC
+          <img src={logo} alt="" width={40} height={40} />
         </a>
 
         <div className="nav-rail__links">
@@ -157,6 +124,7 @@ function Nav() {
                 onClick={handleNavClick}
                 title={item.label}
                 aria-label={item.label}
+                aria-current={isActive ? "true" : undefined}
               >
                 <span className="nav-rail__short">{item.short}</span>
               </a>
@@ -165,15 +133,7 @@ function Nav() {
         </div>
 
         <div className="nav-rail__footer">
-          <button
-            type="button"
-            className="nav-rail__command"
-            onClick={() => setIsCommandOpen(true)}
-            title="Command palette"
-          >
-            ⌘K
-          </button>
-          {socialItems.map((item) => (
+          {navSocials.map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -198,8 +158,14 @@ function Nav() {
             onClick={() => setIsMenuOpen(false)}
           />
         )}
-        <a href="#top" className="nav-mobile__brand" onClick={handleNavClick}>
-          Eric Capiz
+        <a
+          href="#top"
+          className="nav-mobile__brand"
+          onClick={handleNavClick}
+          aria-label="Home"
+        >
+          <img src={logo} alt="" width={28} height={28} />
+          <span>Eric Capiz</span>
         </a>
         <button
           type="button"
@@ -207,68 +173,22 @@ function Nav() {
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle navigation"
           aria-expanded={isMenuOpen}
+          aria-controls="mobile-nav-sheet"
         >
           {isMenuOpen ? <RiCloseLine size={22} /> : <RiMenu3Line size={22} />}
         </button>
         <div
           ref={menuSheetRef}
+          id="mobile-nav-sheet"
           className={`nav-mobile__sheet ${isMenuOpen ? "is-open" : ""}`}
-          role="menu"
         >
           {navItems.map((item) => (
             <a key={item.href} href={item.href} onClick={handleNavClick}>
               {item.label}
             </a>
           ))}
-          <button type="button" onClick={() => setIsCommandOpen(true)}>
-            Command palette <kbd>⌘K</kbd>
-          </button>
         </div>
       </header>
-
-      {isCommandOpen && (
-        <div
-          className="command-backdrop"
-          role="presentation"
-          onMouseDown={() => setIsCommandOpen(false)}
-        >
-          <div
-            ref={commandRef}
-            className="command-panel shine-border"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Command palette"
-            onMouseDown={(event) => event.stopPropagation()}
-          >
-            <div className="command-header">
-              <span>Jump anywhere</span>
-              <button type="button" onClick={() => setIsCommandOpen(false)}>
-                Esc
-              </button>
-            </div>
-            <div className="command-list">
-              {navItems.map((item) => (
-                <a key={item.href} href={item.href} onClick={handleNavClick}>
-                  <span>{item.label}</span>
-                  <small>{item.href}</small>
-                </a>
-              ))}
-              {socialItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => handleSocialClick(item, true)}
-                >
-                  <span>{item.label}</span>
-                  <small>external</small>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

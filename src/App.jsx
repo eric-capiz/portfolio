@@ -25,14 +25,15 @@ function App() {
 
       <Nav />
 
-      <main className="app-main">
+      <main id="main" className="app-main">
         <Hero />
         <About />
         <Projects />
         <Skills />
         <Contact />
-        <Footer />
       </main>
+
+      <Footer />
     </div>
   );
 }

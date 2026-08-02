@@ -1,6 +1,6 @@
 /**
  * Shared project copy for the UI and build-time SEO prerender.
- * Image files stay mapped in Projects.jsx via `imageKey`.
+ * Image files stay mapped in Projects.jsx via imageKey.
  */
 export const projectsData = [
   {

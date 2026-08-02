@@ -1,93 +1,133 @@
 # Portfolio Website
 
-A modern, interactive portfolio website built with React and Vite, showcasing my projects and skills as a Frontend Developer.
+Personal portfolio for Eric Capiz, frontend developer. Built with React and Vite.
 
-## 🚀 My Portfolio
+## Live site
 
-[View Live Site](https://www.ericcapiz.com/)
+[www.ericcapiz.com](https://www.ericcapiz.com/)
 
-## ✨ Features
+## Features
 
-- Responsive design for mobile and desktop
-- Smooth animations and transitions
-- Project showcase with live demos and code links
+- Responsive layout (desktop nav rail + mobile header)
+- GSAP scroll / entrance motion (respects reduced-motion)
+- Project cards with demo clips (load when near viewport), live/code links, and demo logins
+- Contact form via Web3Forms
+- Build-time SEO HTML snapshot for crawlers
 
-## 🔄 Feature Updates
+## Built with
 
-- **Project videos** — Looping screen recordings for project cards (Chop Shop, Sweet Dreams Bakery, DJ Cosmic Drift, Course Correct, Lost and Found); videos play when in view
-
-## 🛠️ Built With
-
-- React
-- Vite
+- React 18
+- Vite 6
 - SCSS
+- GSAP
+- react-icons
 
-## 🚀 Getting Started
+## Getting started
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
+- Node.js 18 or higher
+- npm
 
-### Installation
+### Setup
 
 1. Clone the repository
-   git clone https://github.com/your-username/portfolio.git
+
+```bash
+git clone https://github.com/eric-capiz/portfolio.git
+cd portfolio
+```
 
 2. Install dependencies
-   npm install
 
-3. Start the development server
-   npm run dev
+```bash
+npm install
+```
 
-4. Build for production
-   npm run build
+3. Add a Web3Forms key in `.env` (see `.env.example`)
 
-## 📱 Featured Projects
+```env
+VITE_WEB3FORMS_ACCESS_KEY=your_key_here
+```
+
+4. Start the dev server
+
+```bash
+npm run dev
+```
+
+5. Production build (includes SEO prerender)
+
+```bash
+npm run build
+npm run preview
+```
+
+## Featured projects
+
+### RezIQ
+
+AI career assistant that compares a resume to a job description with evidence-based fit scoring.
+
+- [Live site](https://reziq-phi.vercel.app/)
+- [GitHub](https://github.com/eric-capiz/reziq)
+
+### Referra
+
+Privacy-first referral networking app with handshake unlocks, chat, and job search tools.
+
+- [Live site](https://referra-iota.vercel.app/)
+- [GitHub](https://github.com/eric-capiz/refera)
+
+### LeadReach
+
+Next.js outreach tool: Google Places lead search, MongoDB storage, templates for outreach drafts.
+
+- [Live site](https://lead-reach.vercel.app/)
 
 ### Chop Shop
 
-Multi-barber barbershop booking app. Users browse barbers, book appointments, and leave reviews. Barbers manage profiles, services, gallery, and availability; superadmin manages multiple barbers. MERN stack with React 18, TypeScript, TanStack Query, and Zustand.
+Multi-barber booking app. Users book and review; admins manage barbers, services, gallery, and availability. MERN + TypeScript + TanStack Query.
 
-- [Live Site](https://chop-shop-ec.vercel.app/)
+- [Live site](https://chop-shop-ec.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/chop_shop)
-
-### Sweet Dreams Bakery
-
-A React application with TypeScript and Framer Motion animations.
-
-- [Live Site](https://bakery-ec.vercel.app/)
-- [GitHub](https://github.com/eric-capiz/bakery)
-
-### DJ Cosmic Drift
-
-A cosmic DJ experience — Next.js site with an immersive hero (light rays, turntable), plus about, samples, contact, tour dates, and media. Built with Next.js, React 19, TypeScript, Tailwind CSS, and React Bits.
-
-- [Live Site](https://dj-cosmic-drift.vercel.app/)
-- [GitHub](https://github.com/eric-capiz/dj)
 
 ### Course Correct
 
-A MERN Stack applicaition for student and tutors to connect
+MERN app connecting students with tutors and study groups. Calendar booking and subject filtering.
 
-- [Live Site](https://course-correct-red.vercel.app/)
+- [Live site](https://course-correct-red.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/course-correct)
 
 ### Lost and Found
 
-A MERN stack application for lost and found items.
+MERN app to report and find lost items, with images, comments, and notifications.
 
-- [Live Site](https://lost-and-found-rosy.vercel.app/)
+- [Live site](https://lost-and-found-rosy.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/lost-and-found)
+
+### Sweet Dreams Bakery
+
+Bakery showcase with samples, contact, reviews, and an admin dashboard. React + TypeScript + Framer Motion.
+
+- [Live site](https://bakery-ec.vercel.app/)
+- [GitHub](https://github.com/eric-capiz/bakery)
+
+### DJ Cosmic Drift
+
+Cosmic DJ site with immersive hero, turntable, samples, contact, and tour dates. Next.js + TypeScript + Tailwind.
+
+- [Live site](https://dj-cosmic-drift.vercel.app/)
+- [GitHub](https://github.com/eric-capiz/dj)
 
 ### Kumiko Component Library
 
-A React component library with TypeScript, Storybook, and SCSS.
+Reusable React components with TypeScript, Storybook, and SCSS.
 
-- [Live Site](https://kumiko-dev.icrossing.com/?path=/docs/components-link-all-stories--docs)
+- [Live site](https://kumiko-dev.icrossing.com/?path=/docs/components-link-all-stories--docs)
 
-## 📫 Contact
+## Contact
 
 - Email: ericcapiz@gmail.com
 - LinkedIn: [Eric Capiz](https://www.linkedin.com/in/eric-capiz/)
-- GitHub: [ericcapiz](https://github.com/eric-capiz)
+- GitHub: [eric-capiz](https://github.com/eric-capiz)

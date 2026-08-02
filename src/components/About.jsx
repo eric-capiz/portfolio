@@ -1,16 +1,7 @@
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { siteCopy } from "../data/siteCopy";
+import { gsap } from "../utils/gsap";
 import { prefersReducedMotion } from "../utils/motion";
-
-gsap.registerPlugin(ScrollTrigger);
-
-const highlights = [
-  { value: "5+", label: "Years in frontend" },
-  { value: "React", label: "SPAs & UI systems" },
-  { value: "Web", label: "Mobile first layouts" },
-];
 
 const { about } = siteCopy;
 
@@ -87,7 +78,7 @@ function About() {
 
         <div className="about__layout">
           <div className="about__stats">
-            {highlights.map((item) => (
+            {about.highlights.map((item) => (
               <article key={item.label} className="about__stat shine-border">
                 <strong>{item.value}</strong>
                 <span>{item.label}</span>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
 import { projectsData as projectsMeta } from "../data/projects";
+import { siteCopy } from "../data/siteCopy";
 import lostAndFoundImg from "../assets/lost-and-found.jpg";
 import sweetDreamsBakeryImg from "../assets/sweet-dreams-bakery.jpg";
 import courseCorrectImg from "../assets/course-correct.jpg";
@@ -32,6 +32,7 @@ const projectsData = projectsMeta.map((project) => ({
 function ProjectCard({ project, index }) {
   const videoRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const hasDemoLogin = project.demoLogin?.length > 0;
   const isReversed = index % 2 === 1;
@@ -40,8 +41,13 @@ function ProjectCard({ project, index }) {
     if (!project.videoSrc || !videoRef.current) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.25 },
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setShouldLoadVideo(true);
+        }
+      },
+      { threshold: 0.15, rootMargin: "240px 0px" },
     );
 
     observer.observe(videoRef.current);
@@ -49,13 +55,13 @@ function ProjectCard({ project, index }) {
   }, [project.videoSrc]);
 
   useEffect(() => {
-    if (!videoRef.current || !project.videoSrc) return;
+    if (!videoRef.current || !project.videoSrc || !shouldLoadVideo) return;
     if (isInView) {
       videoRef.current.play().catch(() => {});
     } else {
       videoRef.current.pause();
     }
-  }, [isInView, project.videoSrc]);
+  }, [isInView, project.videoSrc, shouldLoadVideo]);
 
   const trackProjectLink = (label, url) => {
     Analytics.trackAction({
@@ -78,14 +84,20 @@ function ProjectCard({ project, index }) {
         {project.videoSrc ? (
           <video
             ref={videoRef}
-            src={project.videoSrc}
+            src={shouldLoadVideo ? project.videoSrc : undefined}
             poster={project.mainImage}
             muted
             loop
             playsInline
+            preload="none"
           />
         ) : (
-          <img src={project.mainImage} alt={project.name} />
+          <img
+            src={project.mainImage}
+            alt={project.name}
+            loading="lazy"
+            decoding="async"
+          />
         )}
         <div className="project-entry__preview-shade" aria-hidden="true" />
         {project.videoSrc && (
@@ -129,6 +141,7 @@ function ProjectCard({ project, index }) {
               type="button"
               className="btn btn--ghost btn--sm"
               aria-expanded={isDetailsOpen}
+              aria-controls={`demo-${project.id}`}
               onClick={() => setIsDetailsOpen((open) => !open)}
             >
               {isDetailsOpen ? "Hide login" : "Demo login"}
@@ -136,11 +149,8 @@ function ProjectCard({ project, index }) {
           )}
         </div>
 
-        {hasDemoLogin && (
-          <div
-            className={`project-entry__demo ${isDetailsOpen ? "is-open" : ""}`}
-            aria-hidden={!isDetailsOpen}
-          >
+        {hasDemoLogin && isDetailsOpen && (
+          <div id={`demo-${project.id}`} className="project-entry__demo">
             {project.demoLogin.map((item) => (
               <p key={item.role}>
                 <strong>{item.role}</strong>: {item.user} / {item.pass}
@@ -153,37 +163,16 @@ function ProjectCard({ project, index }) {
   );
 }
 
-ProjectCard.propTypes = {
-  index: PropTypes.number.isRequired,
-  project: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    mainImage: PropTypes.string.isRequired,
-    techStack: PropTypes.arrayOf(PropTypes.string).isRequired,
-    codeLink: PropTypes.string,
-    liveLink: PropTypes.string.isRequired,
-    videoSrc: PropTypes.string,
-    description: PropTypes.string,
-    demoLogin: PropTypes.arrayOf(
-      PropTypes.shape({
-        role: PropTypes.string.isRequired,
-        user: PropTypes.string.isRequired,
-        pass: PropTypes.string.isRequired,
-      }),
-    ),
-  }).isRequired,
-};
-
 function Projects() {
+  const { projects } = siteCopy;
+
   return (
     <section className="projects" id="projects">
       <div className="section-shell">
         <header className="section-head">
-          <p className="section-kicker">02 · Selected work</p>
-          <h2>Selected work</h2>
-          <p className="section-lede">
-            Freelance builds, personal demos, and experiments I&apos;ve worked on.
-          </p>
+          <p className="section-kicker">{projects.kicker}</p>
+          <h2>{projects.title}</h2>
+          <p className="section-lede">{projects.lede}</p>
         </header>
 
         <div className="projects-stack">

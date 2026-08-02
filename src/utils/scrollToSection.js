@@ -1,8 +1,8 @@
-const MOBILE_BREAKPOINT = 900;
+export const MOBILE_BREAKPOINT = 900;
 const OFFSET_MOBILE = 88;
 const OFFSET_DESKTOP = 32;
 
-export function getScrollOffset() {
+function getScrollOffset() {
   return window.innerWidth < MOBILE_BREAKPOINT ? OFFSET_MOBILE : OFFSET_DESKTOP;
 }
 

@@ -1,43 +1,13 @@
-import { useCallback, useEffect, useRef } from "react";
-import gsap from "gsap";
+import { useEffect, useRef } from "react";
 import { siteCopy } from "../data/siteCopy";
+import { gsap } from "../utils/gsap";
 import { prefersReducedMotion } from "../utils/motion";
 import { scrollToId } from "../utils/scrollToSection";
-
-const tickerItems = [
-  "React",
-  "TypeScript",
-  "JavaScript",
-  "Next.js",
-  "Node.js",
-  "MongoDB",
-  "Express",
-  "Storybook",
-  "Tailwind",
-  "SCSS",
-  "Redux",
-  "AEM",
-  "Git",
-  "Figma",
-  "Jira",
-  "Agile",
-  "Responsive UI",
-];
-
-const deckCards = [
-  { label: "Focus", value: "React SPAs" },
-  { label: "UI", value: "Mobile first web" },
-  { label: "Workflow", value: "AI assisted dev" },
-];
 
 const { hero } = siteCopy;
 
 function Hero() {
   const heroRef = useRef(null);
-
-  const handleScroll = useCallback(() => {
-    scrollToId("projects");
-  }, []);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -74,27 +44,46 @@ function Hero() {
           </p>
 
           <h1 className="hero__title">
-            <span className="hero__title-line">Building digital</span>
-            <span className="hero__title-line hero__title-line--accent">
-              solutions that matter
-            </span>
+            {hero.titleLines.map((line, index) => (
+              <span
+                key={line}
+                className={
+                  index === hero.titleLines.length - 1
+                    ? "hero__title-line hero__title-line--accent"
+                    : "hero__title-line"
+                }
+              >
+                {line}
+              </span>
+            ))}
           </h1>
 
           <p className="hero__lede">{hero.lede}</p>
 
           <div className="hero__actions">
-            <button type="button" className="btn btn--primary" onClick={handleScroll}>
+            <button
+              type="button"
+              className="btn btn--primary"
+              onClick={() => scrollToId("projects")}
+            >
               View projects
               <span aria-hidden="true">↗</span>
             </button>
-            <a className="btn btn--ghost" href="#contact">
+            <a
+              className="btn btn--ghost"
+              href="#contact"
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToId("contact");
+              }}
+            >
               Start a conversation
             </a>
           </div>
         </header>
 
         <aside className="hero__deck" aria-label="Quick highlights">
-          {deckCards.map((card) => (
+          {hero.deck.map((card) => (
             <article key={card.label} className="hero__card shine-border">
               <span className="hero__card-label">{card.label}</span>
               <strong>{card.value}</strong>
@@ -107,7 +96,7 @@ function Hero() {
         <div className="hero__ticker-marquee">
           {[0, 1].map((copy) => (
             <div key={copy} className="hero__ticker-track">
-              {tickerItems.map((item) => (
+              {hero.ticker.map((item) => (
                 <span key={`${copy}-${item}`}>{item}</span>
               ))}
             </div>

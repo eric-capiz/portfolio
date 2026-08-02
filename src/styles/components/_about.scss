@@ -3,7 +3,7 @@
 
   &__layout {
     display: grid;
-    grid-template-columns: minmax(200px, 0.55fr) minmax(0, 1fr);
+    grid-template-columns: 1fr;
     gap: clamp(2rem, 5vw, 4rem);
     align-items: start;
   }
@@ -55,18 +55,8 @@
   }
 }
 
-@media (max-width: 768px) {
-  .about {
-    .section-head--split {
-      grid-template-columns: 1fr;
-    }
-
-    &__layout {
-      grid-template-columns: 1fr;
-    }
-
-    &__stats {
-      grid-template-columns: 1fr;
-    }
+@media (min-width: 769px) {
+  .about__layout {
+    grid-template-columns: minmax(200px, 0.55fr) minmax(0, 1fr);
   }
 }
