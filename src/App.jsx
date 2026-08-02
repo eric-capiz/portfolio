@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     Analytics.startSession();
 
-    return () => Analytics.stopSession();
+    return () => Analytics.flushAndEndSession();
   }, []);
 
   return (

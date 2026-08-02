@@ -1,25 +1,27 @@
 import { useRef, useState, useEffect } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { siteCopy } from "../data/siteCopy";
 
 const WEB3_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
+const { contact } = siteCopy;
 
 const channels = [
   {
     label: "Email",
-    value: "ericcapiz@gmail.com",
-    href: "mailto:ericcapiz@gmail.com",
+    value: contact.email,
+    href: `mailto:${contact.email}`,
     icon: FaEnvelope,
   },
   {
     label: "GitHub",
     value: "eric-capiz",
-    href: "https://github.com/eric-capiz",
+    href: contact.github,
     icon: FaGithub,
   },
   {
     label: "LinkedIn",
     value: "eric-capiz",
-    href: "https://www.linkedin.com/in/eric-capiz",
+    href: contact.linkedin,
     icon: FaLinkedin,
   },
 ];
@@ -122,11 +124,8 @@ function Contact() {
         <aside className="contact__aside">
           <header className="section-head">
             <p className="section-kicker">04 · Contact</p>
-            <h2>Let&apos;s build something</h2>
-            <p className="section-lede">
-              Open to frontend roles, contract work, and collaborations. Send a message or
-              reach out directly. I&apos;ll get back to you.
-            </p>
+            <h2>{contact.title}</h2>
+            <p className="section-lede">{contact.lede}</p>
           </header>
 
           <ul className="contact__channels">

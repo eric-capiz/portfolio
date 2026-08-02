@@ -22,56 +22,50 @@ import {
 } from "react-icons/si";
 import { FaCube } from "react-icons/fa";
 import { BsKanban } from "react-icons/bs";
+import { siteCopy } from "../data/siteCopy";
+import { prefersReducedMotion } from "../utils/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const skillGroups = [
-  {
-    title: "Frontend",
-    items: [
-      { label: "React (SPA)", icon: SiReact },
-      { label: "Next.js", icon: SiNextdotjs },
-      { label: "TypeScript", icon: SiTypescript },
-      { label: "JavaScript", icon: SiJavascript },
-      { label: "HTML / CSS", icon: SiHtml5 },
-      { label: "Tailwind", icon: SiTailwindcss },
-      { label: "SCSS", icon: SiSass },
-      { label: "Mobile first layouts", icon: SiHtml5 },
-    ],
-  },
-  {
-    title: "UI, state & quality",
-    items: [
-      { label: "Redux", icon: SiRedux },
-      { label: "Storybook", icon: SiStorybook },
-      { label: "Unit testing & TDD", icon: SiJest },
-    ],
-  },
-  {
-    title: "Backend & CMS",
-    items: [
-      { label: "Node.js", icon: SiNodedotjs },
-      { label: "Express", icon: SiExpress },
-      { label: "MongoDB", icon: SiMongodb },
-      { label: "Adobe Experience Manager", icon: FaCube },
-    ],
-  },
-  {
-    title: "Workflow & practice",
-    items: [
-      { label: "Git", icon: SiGit },
-      { label: "Agile / Scrum", icon: BsKanban },
-      { label: "Figma", icon: SiFigma },
-      { label: "Jira", icon: SiJira },
-      { label: "NPM", icon: SiNpm },
-    ],
-  },
-];
+const skillIcons = {
+  "React (SPA)": SiReact,
+  "Next.js": SiNextdotjs,
+  TypeScript: SiTypescript,
+  JavaScript: SiJavascript,
+  "HTML / CSS": SiHtml5,
+  Tailwind: SiTailwindcss,
+  SCSS: SiSass,
+  "Mobile first layouts": SiHtml5,
+  Redux: SiRedux,
+  Storybook: SiStorybook,
+  "Unit testing & TDD": SiJest,
+  "Node.js": SiNodedotjs,
+  Express: SiExpress,
+  MongoDB: SiMongodb,
+  "Adobe Experience Manager": FaCube,
+  Git: SiGit,
+  "Agile / Scrum": BsKanban,
+  Figma: SiFigma,
+  Jira: SiJira,
+  NPM: SiNpm,
+};
+
+const skillGroups = siteCopy.skills.groups.map((group) => ({
+  title: group.title,
+  items: group.items.map((label) => ({
+    label,
+    icon: skillIcons[label] || SiJavascript,
+  })),
+}));
+
+const { skills } = siteCopy;
 
 function Skills() {
   const skillsRef = useRef(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const ctx = gsap.context(() => {
       gsap.from(".skills-panel", {
         y: 40,
@@ -94,11 +88,8 @@ function Skills() {
       <div className="section-shell">
         <header className="section-head section-head--center">
           <p className="section-kicker">03 · Capabilities</p>
-          <h2>Technical skills</h2>
-          <p className="section-lede">
-            Tools and practices I use for enterprise React work, freelance builds, and
-            day to day delivery.
-          </p>
+          <h2>{skills.title}</h2>
+          <p className="section-lede">{skills.lede}</p>
         </header>
 
         <div className="skills-panels">

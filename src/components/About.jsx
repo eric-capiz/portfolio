@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { siteCopy } from "../data/siteCopy";
+import { prefersReducedMotion } from "../utils/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,11 +12,15 @@ const highlights = [
   { value: "Web", label: "Mobile first layouts" },
 ];
 
+const { about } = siteCopy;
+
 function About() {
   const aboutRef = useRef(null);
   const paragraphRefs = useRef([]);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".about__title",
@@ -76,7 +82,7 @@ function About() {
       <div className="section-shell">
         <header className="section-head section-head--split">
           <p className="section-kicker">01 · About</p>
-          <h2 className="about__title">Building reliable interfaces</h2>
+          <h2 className="about__title">{about.title}</h2>
         </header>
 
         <div className="about__layout">
@@ -90,16 +96,16 @@ function About() {
           </div>
 
           <div className="about__copy">
-            <p ref={(el) => (paragraphRefs.current[0] = el)}>
-              Frontend developer focused on React, TypeScript, and modern CSS. Experience
-              spans enterprise SPAs, component libraries, and layouts that work across
-              screen sizes, with attention to structure, performance, and maintainable code.
-            </p>
-            <p ref={(el) => (paragraphRefs.current[1] = el)}>
-              Recent work includes marketing sites, booking flows, and frontend web apps
-              with Node and MongoDB. Comfortable in agile teams and documenting UI in
-              Storybook when projects call for it.
-            </p>
+            {about.paragraphs.map((paragraph, index) => (
+              <p
+                key={paragraph.slice(0, 24)}
+                ref={(el) => {
+                  paragraphRefs.current[index] = el;
+                }}
+              >
+                {paragraph}
+              </p>
+            ))}
           </div>
         </div>
       </div>

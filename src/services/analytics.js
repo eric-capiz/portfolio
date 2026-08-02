@@ -210,6 +210,48 @@ class Analytics {
       this.updateScrollTracking();
     }, 1000);
     window.addEventListener("scroll", this.scrollHandler);
+    this.bindUnloadHandlers();
+  }
+
+  bindUnloadHandlers() {
+    this.unbindUnloadHandlers();
+
+    this.visibilityHandler = () => {
+      if (document.visibilityState === "hidden") {
+        this.flushScrollTracking({ beacon: true });
+      }
+    };
+    this.pageHideHandler = (event) => {
+      this.flushScrollTracking({ beacon: true });
+      // bfcache: keep session; full leave: end it
+      if (!event.persisted) {
+        this.stopSession();
+      }
+    };
+    this.pageShowHandler = () => {
+      if (!this.isSessionActive) {
+        this.startSession();
+      }
+    };
+
+    document.addEventListener("visibilitychange", this.visibilityHandler);
+    window.addEventListener("pagehide", this.pageHideHandler);
+    window.addEventListener("pageshow", this.pageShowHandler);
+  }
+
+  unbindUnloadHandlers() {
+    if (this.visibilityHandler) {
+      document.removeEventListener("visibilitychange", this.visibilityHandler);
+      this.visibilityHandler = null;
+    }
+    if (this.pageHideHandler) {
+      window.removeEventListener("pagehide", this.pageHideHandler);
+      this.pageHideHandler = null;
+    }
+    if (this.pageShowHandler) {
+      window.removeEventListener("pageshow", this.pageShowHandler);
+      this.pageShowHandler = null;
+    }
   }
 
   stopScrollTracking() {
@@ -224,31 +266,8 @@ class Analytics {
     }
   }
 
-  stopSession() {
-    this.isSessionActive = false;
-    this.sessionToken = null;
-    this.sessionId = null;
-    this.sectionStartTimes = {};
-    this.stopScrollTracking();
-  }
-
-  throttle(func, limit) {
-    let inThrottle;
-    return function (...args) {
-      if (!inThrottle) {
-        func.apply(this, args);
-        inThrottle = true;
-        setTimeout(() => (inThrottle = false), limit);
-      }
-    };
-  }
-
-  async updateScrollTracking() {
-    if (!this.sessionId) return;
-
+  collectScrollData() {
     const now = Date.now();
-    if (now - this.lastScrollUpdate < this.scrollUpdateInterval) return;
-
     const sections = ["about", "projects", "skills", "contact"];
     const scrollData = [];
 
@@ -282,21 +301,75 @@ class Analytics {
       }
     }
 
+    return scrollData;
+  }
+
+  sendScrollData(scrollData, { beacon = false } = {}) {
+    if (!this.sessionId || !scrollData.length) return;
+
+    const url = `${this.baseUrl}/session/${this.sessionId}/scroll`;
+    const body = JSON.stringify(scrollData);
+
+    if (beacon && typeof navigator.sendBeacon === "function") {
+      const blob = new Blob([body], { type: "application/json" });
+      const queued = navigator.sendBeacon(url, blob);
+      if (queued) return Promise.resolve();
+    }
+
+    return fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+      keepalive: true,
+    }).catch(() => {});
+  }
+
+  async updateScrollTracking() {
+    if (!this.sessionId) return;
+
+    const now = Date.now();
+    if (now - this.lastScrollUpdate < this.scrollUpdateInterval) return;
+
+    const scrollData = this.collectScrollData();
     if (scrollData.length > 0) {
-      try {
-        await fetch(`${this.baseUrl}/session/${this.sessionId}/scroll`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(scrollData),
-        });
-      } catch {
-        return;
-      }
+      await this.sendScrollData(scrollData);
     }
 
     this.lastScrollUpdate = now;
+  }
+
+  flushScrollTracking({ beacon = false } = {}) {
+    if (!this.sessionId) return;
+    const scrollData = this.collectScrollData();
+    this.sendScrollData(scrollData, { beacon });
+    this.lastScrollUpdate = Date.now();
+  }
+
+  flushAndEndSession() {
+    if (!this.isSessionActive && !this.sessionId) return;
+
+    this.flushScrollTracking({ beacon: true });
+    this.stopSession();
+  }
+
+  stopSession() {
+    this.isSessionActive = false;
+    this.sessionToken = null;
+    this.sessionId = null;
+    this.sectionStartTimes = {};
+    this.unbindUnloadHandlers();
+    this.stopScrollTracking();
+  }
+
+  throttle(func, limit) {
+    let inThrottle;
+    return function (...args) {
+      if (!inThrottle) {
+        func.apply(this, args);
+        inThrottle = true;
+        setTimeout(() => (inThrottle = false), limit);
+      }
+    };
   }
 
   async trackAction(action) {

@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import gsap from "gsap";
+import { siteCopy } from "../data/siteCopy";
+import { prefersReducedMotion } from "../utils/motion";
 import { scrollToId } from "../utils/scrollToSection";
 
 const tickerItems = [
@@ -28,6 +30,8 @@ const deckCards = [
   { label: "Workflow", value: "AI assisted dev" },
 ];
 
+const { hero } = siteCopy;
+
 function Hero() {
   const heroRef = useRef(null);
 
@@ -36,6 +40,8 @@ function Hero() {
   }, []);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const ctx = gsap.context(() => {
       gsap.from(".hero__eyebrow, .hero__title-line, .hero__lede, .hero__actions", {
         y: 36,
@@ -64,7 +70,7 @@ function Hero() {
         <header className="hero__copy">
           <p className="hero__eyebrow">
             <span className="hero__pulse" aria-hidden="true" />
-            Frontend developer · Eric Capiz
+            {hero.eyebrow}
           </p>
 
           <h1 className="hero__title">
@@ -74,10 +80,7 @@ function Hero() {
             </span>
           </h1>
 
-          <p className="hero__lede">
-            I design and build React interfaces, from enterprise SPAs and component
-            work to freelance sites and frontend demos.
-          </p>
+          <p className="hero__lede">{hero.lede}</p>
 
           <div className="hero__actions">
             <button type="button" className="btn btn--primary" onClick={handleScroll}>
