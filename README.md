@@ -1,6 +1,6 @@
 # Portfolio Website
 
-Personal portfolio for Eric Capiz, frontend developer. Built with React and Vite.
+Personal portfolio for Eric Capiz, Frontend Developer. Built with React and Vite.
 
 ## Live site
 
@@ -9,10 +9,10 @@ Personal portfolio for Eric Capiz, frontend developer. Built with React and Vite
 ## Features
 
 - Responsive layout (desktop nav rail + mobile header)
-- GSAP scroll / entrance motion (respects reduced-motion)
+- GSAP scroll / entrance motion (respects reduced motion)
 - Project cards with demo clips (load when near viewport), live/code links, and demo logins
 - Contact form via Web3Forms
-- Build-time SEO HTML snapshot for crawlers
+- Build time SEO HTML snapshot for crawlers
 
 ## Built with
 
@@ -67,14 +67,14 @@ npm run preview
 
 ### RezIQ
 
-AI career assistant that compares a resume to a job description with evidence-based fit scoring.
+AI career assistant that compares a resume to a job description with evidence based fit scoring.
 
 - [Live site](https://reziq-phi.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/reziq)
 
 ### Referra
 
-Privacy-first referral networking app with handshake unlocks, chat, and job search tools.
+Privacy first referral networking app with handshake unlocks, chat, and job search tools.
 
 - [Live site](https://referra-iota.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/refera)
@@ -87,7 +87,7 @@ Next.js outreach tool: Google Places lead search, MongoDB storage, templates for
 
 ### Chop Shop
 
-Multi-barber booking app. Users book and review; admins manage barbers, services, gallery, and availability. MERN + TypeScript + TanStack Query.
+Multi barber booking app. Users book and review; admins manage barbers, services, gallery, and availability. MERN + TypeScript + TanStack Query.
 
 - [Live site](https://chop-shop-ec.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/chop_shop)
@@ -115,7 +115,7 @@ Bakery showcase with samples, contact, reviews, and an admin dashboard. React + 
 
 ### DJ Cosmic Drift
 
-Cosmic DJ site with immersive hero, turntable, samples, contact, and tour dates. Next.js + TypeScript + Tailwind.
+Cosmic DJ site with animated hero, turntable, samples, contact, and tour dates. Next.js + TypeScript + Tailwind.
 
 - [Live site](https://dj-cosmic-drift.vercel.app/)
 - [GitHub](https://github.com/eric-capiz/dj)

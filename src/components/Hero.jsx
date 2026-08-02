@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import logo from "../assets/logo.png";
 import { siteCopy } from "../data/siteCopy";
 import { gsap } from "../utils/gsap";
 import { prefersReducedMotion } from "../utils/motion";
@@ -13,13 +14,16 @@ function Hero() {
     if (prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      gsap.from(".hero__eyebrow, .hero__title-line, .hero__lede, .hero__actions", {
-        y: 36,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.12,
-        ease: "power3.out",
-      });
+      gsap.from(
+        ".hero__eyebrow, .hero__title-line, .hero__lede, .hero__actions",
+        {
+          y: 36,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.12,
+          ease: "power3.out",
+        },
+      );
 
       gsap.from(".hero__card", {
         y: 24,
@@ -34,12 +38,23 @@ function Hero() {
     return () => ctx.revert();
   }, []);
 
+  const handleSectionLink = (event) => {
+    event.preventDefault();
+    scrollToId(event.currentTarget.getAttribute("href").slice(1));
+  };
+
   return (
     <section className="hero" id="top" ref={heroRef}>
       <div className="hero__inner">
         <header className="hero__copy">
           <p className="hero__eyebrow">
-            <span className="hero__pulse" aria-hidden="true" />
+            <img
+              className="hero__mark"
+              src={logo}
+              alt=""
+              width={22}
+              height={22}
+            />
             {hero.eyebrow}
           </p>
 
@@ -61,21 +76,18 @@ function Hero() {
           <p className="hero__lede">{hero.lede}</p>
 
           <div className="hero__actions">
-            <button
-              type="button"
+            <a
               className="btn btn--primary"
-              onClick={() => scrollToId("projects")}
+              href="#projects"
+              onClick={handleSectionLink}
             >
               View projects
               <span aria-hidden="true">↗</span>
-            </button>
+            </a>
             <a
               className="btn btn--ghost"
               href="#contact"
-              onClick={(event) => {
-                event.preventDefault();
-                scrollToId("contact");
-              }}
+              onClick={handleSectionLink}
             >
               Start a conversation
             </a>

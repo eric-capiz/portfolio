@@ -336,8 +336,7 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   .shine-border::before,
-  .hero__ticker-marquee,
-  .hero__pulse {
+  .hero__ticker-marquee {
     animation: none;
   }
 

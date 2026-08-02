@@ -11,6 +11,7 @@ import djImg from "../assets/dj.jpg";
 import leadImg from "../assets/lead.jpg";
 import referraImg from "../assets/referra.jpg";
 import reziqImg from "../assets/reziq.jpg";
+import { prefersReducedMotion } from "../utils/motion";
 
 const imageByKey = {
   reziq: reziqImg,
@@ -36,9 +37,11 @@ function ProjectCard({ project, index }) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const hasDemoLogin = project.demoLogin?.length > 0;
   const isReversed = index % 2 === 1;
+  const reduceMotion = prefersReducedMotion();
+  const showVideo = Boolean(project.videoSrc) && !reduceMotion;
 
   useEffect(() => {
-    if (!project.videoSrc || !videoRef.current) return;
+    if (!showVideo || !videoRef.current) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -52,16 +55,16 @@ function ProjectCard({ project, index }) {
 
     observer.observe(videoRef.current);
     return () => observer.disconnect();
-  }, [project.videoSrc]);
+  }, [showVideo]);
 
   useEffect(() => {
-    if (!videoRef.current || !project.videoSrc || !shouldLoadVideo) return;
+    if (!videoRef.current || !showVideo || !shouldLoadVideo) return;
     if (isInView) {
       videoRef.current.play().catch(() => {});
     } else {
       videoRef.current.pause();
     }
-  }, [isInView, project.videoSrc, shouldLoadVideo]);
+  }, [isInView, showVideo, shouldLoadVideo]);
 
   const trackProjectLink = (label, url) => {
     Analytics.trackAction({
@@ -81,7 +84,7 @@ function ProjectCard({ project, index }) {
       </div>
 
       <div className="project-entry__preview">
-        {project.videoSrc ? (
+        {showVideo ? (
           <video
             ref={videoRef}
             src={shouldLoadVideo ? project.videoSrc : undefined}
@@ -90,6 +93,7 @@ function ProjectCard({ project, index }) {
             loop
             playsInline
             preload="none"
+            aria-label={`${project.name} demo`}
           />
         ) : (
           <img
@@ -100,7 +104,7 @@ function ProjectCard({ project, index }) {
           />
         )}
         <div className="project-entry__preview-shade" aria-hidden="true" />
-        {project.videoSrc && (
+        {showVideo && (
           <span className="project-entry__preview-badge">Demo clip</span>
         )}
       </div>

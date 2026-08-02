@@ -7,18 +7,6 @@
   }
 }
 
-@keyframes pulse-dot {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(0.85);
-  }
-}
-
 .hero {
   min-height: auto;
   display: flex;
@@ -39,7 +27,7 @@
   &__eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.65rem;
     margin-bottom: 1.25rem;
     font-family: var(--font-mono);
     font-size: 0.78rem;
@@ -47,13 +35,13 @@
     letter-spacing: 0.04em;
   }
 
-  &__pulse {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background: var(--cyan);
-    box-shadow: 0 0 12px var(--cyan);
-    animation: pulse-dot 2s ease-in-out infinite;
+  &__mark {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 0.35rem;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--line);
   }
 
   &__title {

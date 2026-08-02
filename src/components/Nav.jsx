@@ -19,6 +19,8 @@ function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("top");
   const menuSheetRef = useRef(null);
+  const menuToggleRef = useRef(null);
+  const wasMenuOpenRef = useRef(false);
 
   useEffect(() => {
     setBodyScrollLock(isMenuOpen);
@@ -28,7 +30,10 @@ function Nav() {
   useEffect(() => {
     if (isMenuOpen) {
       menuSheetRef.current?.querySelector("a")?.focus();
+    } else if (wasMenuOpenRef.current) {
+      menuToggleRef.current?.focus();
     }
+    wasMenuOpenRef.current = isMenuOpen;
   }, [isMenuOpen]);
 
   useEffect(() => {
@@ -168,6 +173,7 @@ function Nav() {
           <span>Eric Capiz</span>
         </a>
         <button
+          ref={menuToggleRef}
           type="button"
           className="nav-mobile__toggle"
           onClick={() => setIsMenuOpen(!isMenuOpen)}

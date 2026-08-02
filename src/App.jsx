@@ -6,13 +6,18 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Analytics from "./services/analytics";
+import { initHashScroll } from "./utils/scrollToSection";
 import { useEffect } from "react";
 
 function App() {
   useEffect(() => {
     Analytics.startSession();
+    const teardownHashScroll = initHashScroll();
 
-    return () => Analytics.flushAndEndSession();
+    return () => {
+      teardownHashScroll();
+      Analytics.flushAndEndSession();
+    };
   }, []);
 
   return (

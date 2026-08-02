@@ -49,7 +49,7 @@ function Footer() {
           </a>
           <div>
             <p>Eric Capiz</p>
-            <span>Frontend developer</span>
+            <span>Frontend Developer</span>
           </div>
         </div>
 

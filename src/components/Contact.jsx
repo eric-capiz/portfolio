@@ -83,21 +83,18 @@ function Contact() {
 
     if (status === "error") {
       return (
-        <div className="form-status form-status--error" role="status">
-          Failed to send message. Please try again.
+        <div className="form-status form-status--error" role="alert">
+          Failed to send message. Please try again or email{" "}
+          <a href={`mailto:${contact.email}`}>{contact.email}</a>.
         </div>
       );
     }
 
     if (status === "noconfig") {
       return (
-        <div className="form-status form-status--error" role="status">
-          Contact form needs <code>VITE_WEB3FORMS_ACCESS_KEY</code> in{" "}
-          <code>.env</code>. Free key:{" "}
-          <a href="https://web3forms.com/" target="_blank" rel="noopener noreferrer">
-            web3forms.com
-          </a>
-          .
+        <div className="form-status form-status--error" role="alert">
+          The contact form is temporarily unavailable. Email me at{" "}
+          <a href={`mailto:${contact.email}`}>{contact.email}</a> instead.
         </div>
       );
     }

@@ -102,7 +102,15 @@ function injectSnapshot(html, snapshot) {
     throw new Error('Could not find <div id="root"></div> in dist/index.html');
   }
 
-  return html.replace(
+  const hideStyle =
+    "<style>#seo-prerender{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>";
+
+  let next = html;
+  if (!next.includes("#seo-prerender{")) {
+    next = next.replace("</head>", `${hideStyle}</head>`);
+  }
+
+  return next.replace(
     '<div id="root"></div>',
     `<div id="root">${snapshot}</div>`,
   );

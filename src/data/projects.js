@@ -8,7 +8,7 @@ export const projectsData = [
     imageKey: "reziq",
     name: "RezIQ",
     description:
-      "RezIQ is an AI career assistant that compares your resume to a real job description and explains the fit with evidence, not guesswork. Upload a DOCX, paste the posting, and get a Strong, Possible, or Poor fit read plus honest improvement suggestions you can accept before exporting. It never invents skills or experience you cannot claim.",
+      "RezIQ is an AI career assistant that compares your resume to a real job description and explains the fit with evidence. Upload a DOCX, paste the posting, and get a Strong, Possible, or Poor fit read plus improvement suggestions you can accept before exporting. It never invents skills or experience you cannot claim.",
     demoLogin: [{ role: "Demo", user: "demo", pass: "demo11" }],
     techStack: ["React", "Next.js", "MongoDB", "Gemini", "Groq"],
     codeLink: "https://github.com/eric-capiz/reziq",
@@ -96,7 +96,7 @@ export const projectsData = [
     imageKey: "dj",
     name: "DJ Cosmic Drift",
     description:
-      "Cosmic DJ experience with immersive hero, animated turntable, and sections for about, samples, contact, and tour dates.",
+      "Cosmic DJ site with an animated hero, turntable, and sections for about, samples, contact, and tour dates.",
     techStack: ["Next.js", "React", "TypeScript", "Tailwind", "React Bits"],
     codeLink: "https://github.com/eric-capiz/dj",
     liveLink: "https://dj-cosmic-drift.vercel.app/",

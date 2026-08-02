@@ -1,11 +1,11 @@
 /** Shared marketing copy for the UI and build-time SEO prerender. */
 export const siteCopy = {
   hero: {
-    eyebrow: "Frontend developer · Eric Capiz",
+    eyebrow: "Frontend Developer · Eric Capiz",
     title: "Building digital solutions that matter",
     titleLines: ["Building digital", "solutions that matter"],
     lede:
-      "I design and build React interfaces, from enterprise SPAs and component work to freelance sites and frontend demos.",
+      "I design and build React UIs, from enterprise SPAs and component work to freelance sites and frontend demos.",
     deck: [
       { label: "Focus", value: "React SPAs" },
       { label: "UI", value: "Mobile first web" },
@@ -34,7 +34,7 @@ export const siteCopy = {
   about: {
     title: "Building reliable interfaces",
     paragraphs: [
-      "Frontend developer focused on React, TypeScript, and modern CSS. Experience spans enterprise SPAs, component libraries, and layouts that work across screen sizes, with attention to structure, performance, and maintainable code.",
+      "Frontend Developer focused on React, TypeScript, and modern CSS. Experience spans enterprise SPAs, component libraries, and layouts that work across screen sizes. Strong on structure, performance, and maintainable code.",
       "Recent work includes marketing sites, booking flows, and frontend web apps with Node and MongoDB. Comfortable in agile teams and documenting UI in Storybook when projects call for it.",
     ],
     highlights: [
