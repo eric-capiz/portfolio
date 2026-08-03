@@ -32,16 +32,39 @@ function buildSnapshot() {
   const projectBlocks = projectsData
     .map((project) => {
       const tech = project.techStack.map(escapeHtml).join(", ");
-      const code = project.codeLink
-        ? `<p><a href="${escapeHtml(project.codeLink)}">View code</a></p>`
+      const samples = project.samples?.length
+        ? project.samples
+            .map((sample) => {
+              const code = sample.codeLink
+                ? `<a href="${escapeHtml(sample.codeLink)}">View code</a>`
+                : "";
+              return `
+                <li>
+                  <h4>${escapeHtml(sample.name)}</h4>
+                  <p>${escapeHtml(sample.blurb)}</p>
+                  <p>
+                    <a href="${escapeHtml(sample.liveLink)}">Live site</a>
+                    ${code ? ` · ${code}` : ""}
+                  </p>
+                </li>`;
+            })
+            .join("\n")
         : "";
+      const links = project.samples?.length
+        ? `<ul>${samples}</ul>`
+        : `
+          <p><a href="${escapeHtml(project.liveLink)}">Live site</a></p>
+          ${
+            project.codeLink
+              ? `<p><a href="${escapeHtml(project.codeLink)}">View code</a></p>`
+              : ""
+          }`;
       return `
         <article>
           <h3>${escapeHtml(project.name)}</h3>
           <p>${escapeHtml(project.description)}</p>
           <p>Tech: ${tech}</p>
-          <p><a href="${escapeHtml(project.liveLink)}">Live site</a></p>
-          ${code}
+          ${links}
         </article>`;
     })
     .join("\n");

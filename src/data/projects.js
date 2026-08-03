@@ -80,18 +80,6 @@ export const projectsData = [
     videoSrc: "/demo_clips/lost.mp4",
   },
   {
-    id: 2,
-    imageKey: "sweetDreamsBakery",
-    name: "Sweet Dreams Bakery",
-    description:
-      "Bakery showcase site with samples, contact form, and reviews. Admin dashboard for content management.",
-    demoLogin: [{ role: "Admin", user: "demo", pass: "demo" }],
-    techStack: ["React", "TypeScript", "Framer Motion", "SCSS"],
-    codeLink: "https://github.com/eric-capiz/bakery",
-    liveLink: "https://bakery-ec.vercel.app/",
-    videoSrc: "/demo_clips/bakery.mp4",
-  },
-  {
     id: 3,
     imageKey: "dj",
     name: "DJ Cosmic Drift",
@@ -101,6 +89,44 @@ export const projectsData = [
     codeLink: "https://github.com/eric-capiz/dj",
     liveLink: "https://dj-cosmic-drift.vercel.app/",
     videoSrc: "/demo_clips/dj-demo.mp4",
+  },
+  {
+    id: 10,
+    name: "Local business sites",
+    description:
+      "Sample marketing sites for local service businesses. Sweet Dreams Bakery is a bakery showcase with reviews and an admin dashboard. Brume is a florist for custom made arrangements. Ellis covers landscape work plus car detail and car wash. Pit is a mechanic for in shop and mobile service.",
+    techStack: ["React", "Next.js", "TypeScript"],
+    samples: [
+      {
+        name: "Sweet Dreams Bakery",
+        blurb: "Bakery showcase with contact, reviews, and admin tools",
+        imageKey: "sweetDreamsBakery",
+        liveLink: "https://bakery-ec.vercel.app/",
+        codeLink: "https://github.com/eric-capiz/bakery",
+        demoLogin: [{ role: "Admin", user: "demo", pass: "demo" }],
+      },
+      {
+        name: "Brume",
+        blurb: "Florist for custom made arrangements",
+        imageKey: "brume",
+        liveLink: "https://florist-ec.vercel.app/",
+        codeLink: "https://github.com/eric-capiz/bakery/tree/florist",
+      },
+      {
+        name: "Ellis",
+        blurb: "Landscape, car detail, and car wash",
+        imageKey: "ellis",
+        liveLink: "https://landscape-ec.vercel.app/",
+        codeLink: "https://github.com/eric-capiz/bakery/tree/landscape",
+      },
+      {
+        name: "Pit",
+        blurb: "In shop and mobile mechanic",
+        imageKey: "pit",
+        liveLink: "https://mechanic-five.vercel.app/",
+        codeLink: "https://github.com/eric-capiz/bakery/tree/mechanic",
+      },
+    ],
   },
   {
     id: 6,
