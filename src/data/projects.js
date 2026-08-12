@@ -28,6 +28,17 @@ export const projectsData = [
     videoSrc: "/demo_clips/referra.mp4",
   },
   {
+    id: 11,
+    imageKey: "devdrill",
+    name: "Dev Drill",
+    description:
+      "Dev Drill is a gameshow style web dev quiz app. Contestants pick a level, track, and subject, then play fixed length or unlimited multiple choice rounds. Questions are AI generated when needed, stored in MongoDB, and reused later. Quizzes are graded deterministically, with skip and rotate, saved recaps, and a live global scoreboard for high scores and unlimited streaks.",
+    demoLogin: [{ role: "Demo", user: "demo", pass: "demo" }],
+    techStack: ["React", "TypeScript", "Next.js", "MongoDB", "Groq"],
+    codeLink: "https://github.com/eric-capiz/devdrill",
+    liveLink: "https://devdrill-ec.vercel.app/",
+  },
+  {
     id: 7,
     imageKey: "lead",
     name: "LeadReach",

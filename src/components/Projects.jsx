@@ -14,11 +14,13 @@ import reziqImg from "../assets/reziq.jpg";
 import brumeImg from "../assets/brume.jpg";
 import ellisImg from "../assets/ellis.jpg";
 import pitImg from "../assets/pit.jpg";
+import devdrillImg from "../assets/devdrill.jpg";
 import { prefersReducedMotion } from "../utils/motion";
 
 const imageByKey = {
   reziq: reziqImg,
   referra: referraImg,
+  devdrill: devdrillImg,
   lead: leadImg,
   chopShop: chopShopImg,
   courseCorrect: courseCorrectImg,
