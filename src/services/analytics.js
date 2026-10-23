@@ -4,6 +4,8 @@ class Analytics {
 
     this.sessionId = null;
     this.sectionStartTimes = {};
+    this.sectionReportedTimes = {};
+    this.errorQueue = [];
     this.lastScrollUpdate = Date.now();
     this.scrollUpdateInterval = 5000;
     this.location = null;
@@ -11,6 +13,49 @@ class Analytics {
     this.scrollHandler = null;
     this.sessionToken = null;
     this.isSessionActive = false;
+    this.bindErrorHandlers();
+  }
+
+  bindErrorHandlers() {
+    window.addEventListener("error", (event) => {
+      this.trackError({
+        message: event.message || "Unknown error",
+        stack: event.error?.stack || "",
+      });
+    });
+    window.addEventListener("unhandledrejection", (event) => {
+      const reason = event.reason;
+      this.trackError({
+        message: reason?.message || String(reason) || "Unhandled rejection",
+        stack: reason?.stack || "",
+      });
+    });
+  }
+
+  async trackError(error) {
+    if (!this.sessionId) {
+      // Session hasn't started yet; queue and send once it has.
+      this.errorQueue.push(error);
+      return;
+    }
+
+    try {
+      await fetch(`${this.baseUrl}/session/${this.sessionId}/error`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(error),
+      });
+    } catch {
+      return;
+    }
+  }
+
+  flushErrorQueue() {
+    if (!this.sessionId || !this.errorQueue.length) return;
+    const queued = this.errorQueue.splice(0);
+    queued.forEach((error) => this.trackError(error));
   }
 
   getDeviceType() {
@@ -177,6 +222,7 @@ class Analytics {
       if (!this.isSessionActive || this.sessionToken !== sessionToken) return;
 
       this.sessionId = data.sessionId;
+      this.flushErrorQueue();
       this.startScrollTracking();
     } catch {
       return;
@@ -195,6 +241,7 @@ class Analytics {
             this.sectionStartTimes[section] = Date.now();
           } else {
             delete this.sectionStartTimes[section];
+            delete this.sectionReportedTimes[section];
           }
         });
       },
@@ -282,16 +329,29 @@ class Analytics {
       const sectionTop = rect.top;
       const sectionBottom = rect.bottom;
 
+      // True read depth: how far the viewport bottom has travelled
+      // through the section (0 = not reached yet, 100 = fully read).
       let scrollDepth = 0;
-      if (sectionTop < windowHeight && sectionBottom > 0) {
-        const visibleHeight =
-          Math.min(sectionBottom, windowHeight) - Math.max(sectionTop, 0);
-        scrollDepth = (visibleHeight / sectionHeight) * 100;
+      if (sectionHeight > 0) {
+        scrollDepth = Math.min(
+          100,
+          Math.max(0, ((windowHeight - sectionTop) / sectionHeight) * 100)
+        );
       }
 
-      const timeSpent = this.sectionStartTimes[section]
-        ? now - this.sectionStartTimes[section]
-        : 0;
+      // Send only the time since the last report for this section.
+      // The server adds what it receives, so sending the cumulative
+      // elapsed time on every update would count it over and over.
+      let timeSpent = 0;
+      const sectionStart = this.sectionStartTimes[section];
+      if (sectionStart) {
+        const baseline = Math.max(
+          this.sectionReportedTimes[section] || 0,
+          sectionStart
+        );
+        timeSpent = Math.max(0, now - baseline);
+        this.sectionReportedTimes[section] = now;
+      }
 
       if (scrollDepth > 0) {
         scrollData.push({
@@ -389,6 +449,7 @@ class Analytics {
     this.sessionToken = null;
     this.sessionId = null;
     this.sectionStartTimes = {};
+    this.sectionReportedTimes = {};
     this.unbindUnloadHandlers();
     this.stopScrollTracking();
   }
