@@ -3,6 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Referrer guard: visitors arriving from ChatGPT are blocked -->
+    <script>
+      (function () {
+        try {
+          var host = document.referrer
+            ? new URL(document.referrer).hostname
+            : "";
+          if (
+            /(^|\.)chatgpt\.com$/.test(host) ||
+            /(^|\.)chat\.openai\.com$/.test(host)
+          ) {
+            window.__blockedFromChatGPT = true;
+            document.write("<style>#root{display:none!important}</style>");
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta
       name="description"
       content="Eric Capiz, Frontend Developer specializing in React, TypeScript, Next.js, and modern SPAs. View portfolio projects and work samples."
